@@ -3,18 +3,18 @@ from Server.Data.ComputerData import ComputerData
 
 
 class Computer(JsonContract):
-    Id: int
-    Data: ComputerData
+    id: int
+    data: ComputerData
 
     def __init__(self, computer_id: int = None, data: ComputerData = None) -> None:
         if computer_id is not None:
-            self.Id = computer_id
+            self.id = computer_id
         if data is not None:
-            self.Data = data
+            self.data = data
 
     @property
     def _json_fields(self) -> dict:
         return {
-            "i": "Id",
-            "d": "Data"
+            "i": "id",
+            "d": "data"
         }

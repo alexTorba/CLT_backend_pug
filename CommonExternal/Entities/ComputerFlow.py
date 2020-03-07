@@ -5,16 +5,16 @@ from CommonExternal.JsonFomatterModule.JsonContract import JsonContract
 
 
 class ComputerFlow(JsonContract):
-    Flow: List[ComputerState]
+    flow: List[ComputerState]
 
     def __init__(self, flow: List[ComputerState] = None) -> None:
         if flow is not None:
-            self.Flow = flow
+            self.flow = flow
 
     @property
     def _json_fields(self) -> dict:
         return {
-            "f": "Flow"
+            "f": "flow"
         }
 
     @staticmethod
