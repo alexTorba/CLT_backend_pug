@@ -5,13 +5,16 @@ from CommonExternal.Entities.ComputerState import ComputerState
 from CommonExternal.Entities.ComputerFlow import ComputerFlow
 from Client.ClientConfig import ClientConfig
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 
 def send_data_to_server(computer_flow: ComputerFlow):
     pass
 
-#------------------------------------------------------------------------------
 
+# ------------------------------------------------------------------------------
+
+# todo: maybe transfer it to ComputerStateManager (static class) ?
 def read_current_computer_state() -> ComputerState:
     memory_info = psutil.virtual_memory()
 
@@ -21,7 +24,8 @@ def read_current_computer_state() -> ComputerState:
     disk = 10.0
     return ComputerState(current_time, cpu, ram, disk)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 
 if __name__ == '__main__':
     client_config = ClientConfig.create_default_config()
@@ -39,4 +43,4 @@ if __name__ == '__main__':
 
         time.sleep(client_config.check_state_period)
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
