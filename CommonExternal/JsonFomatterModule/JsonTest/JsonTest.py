@@ -1,5 +1,6 @@
 from CommonExternal.Entities.ComputerFlow import ComputerFlow
 from CommonExternal.JsonFomatterModule.JsonFormatter import JsonFormatter
+from CommonExternal.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
 
 
 class JsonTest:
@@ -10,6 +11,19 @@ class JsonTest:
         val = JsonFormatter.deserialize(computer_flow_json, ComputerFlow)
         print()
 
+    @staticmethod
+    def test_request_dto_serialize():
+        dto = RequestDto[ComputerFlow]("some_method", ComputerFlow.get_random_flow())
+        json_dto = JsonFormatter.serialize(dto)
+        dto_value = JsonFormatter.deserialize(json_dto, RequestDto[ComputerFlow])
+        print()
+
+        # repeat
+
+        json_dto2 = JsonFormatter.serialize(dto_value)
+        dto_value2 = JsonFormatter.deserialize(json_dto2, RequestDto[ComputerFlow])
+        print()
+
 
 if __name__ == '__main__':
-    JsonTest.test_computer_flow_serialize()
+    JsonTest.test_request_dto_serialize()
