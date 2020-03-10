@@ -2,7 +2,7 @@ import math
 import time
 from random import randrange, random
 
-from CommonExternal.JsonFomatterModule.JsonContract import JsonContract
+from External.JsonFomatterModule.JsonContract import JsonContract
 
 
 class ComputerState(JsonContract):

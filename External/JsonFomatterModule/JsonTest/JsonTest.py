@@ -1,6 +1,7 @@
-from CommonExternal.Entities.ComputerFlow import ComputerFlow
-from CommonExternal.JsonFomatterModule.JsonFormatter import JsonFormatter
-from CommonExternal.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
+from Common.Entities.ComputerFlow import ComputerFlow
+from Common.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
+
+from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
 
 class JsonTest:

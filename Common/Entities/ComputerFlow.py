@@ -1,7 +1,7 @@
 from typing import List, Dict
 
-from CommonExternal.Entities.ComputerState import ComputerState
-from CommonExternal.JsonFomatterModule.JsonContract import JsonContract
+from Common.Entities.ComputerState import ComputerState
+from External.JsonFomatterModule.JsonContract import JsonContract
 
 
 class ComputerFlow(JsonContract):

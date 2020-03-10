@@ -3,8 +3,8 @@ from json import dumps, loads
 
 import typing
 
-from CommonExternal.JsonFomatterModule.JsonContract import JsonContract
-from CommonExternal.JsonFomatterModule.TypeInspect import TypeInspect
+from External.JsonFomatterModule.JsonContract import JsonContract
+from External.JsonFomatterModule.TypeInspect import TypeInspect
 
 
 class JsonFormatter:

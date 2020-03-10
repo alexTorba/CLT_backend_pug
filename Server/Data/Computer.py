@@ -1,5 +1,5 @@
-from CommonExternal.JsonFomatterModule.JsonContract import JsonContract
 from Server.Data.ComputerData import ComputerData
+from External.JsonFomatterModule.JsonContract import JsonContract
 
 
 class Computer(JsonContract):
