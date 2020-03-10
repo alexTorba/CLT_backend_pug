@@ -1,40 +1,40 @@
 import math
-from datetime import datetime
+import time
 from random import randrange, random
 
 from CommonExternal.JsonFomatterModule.JsonContract import JsonContract
 
 
 class ComputerState(JsonContract):
-    State_time: str
-    Cpu: float
-    Ram: float
-    Disk: float
+    time: float
+    cpu: float # percent of CPU usage
+    ram: float # percent of RAM usage
+    disk: float # percent of DISK usage
 
     # parameters are none because of JsonContract need a default ctor
-    def __init__(self, state_time: str = None, cpu: float = None, ram: float = None, disk: float = None) -> None:
-        if state_time is not None:
-            self.State_time = state_time
+    def __init__(self, time: float = None, cpu: float = None, ram: float = None, disk: float = None) -> None:
+        if time is not None:
+            self.time = time
         if cpu is not None:
-            self.Cpu = cpu
+            self.cpu = cpu
         if ram is not None:
-            self.Ram = ram
+            self.ram = ram
         if disk is not None:
-            self.Disk = disk
+            self.disk = disk
 
     @property
     def _json_fields(self) -> dict:
         return {
-            "t": "State_time",
-            "c": "Cpu",
-            "r": "Ram",
-            "d": "Disk"
+            "t": "time",
+            "c": "cpu",
+            "r": "ram",
+            "d": "disk"
         }
 
     @staticmethod
     def get_random_state():
-        state_time = str(datetime.now())
+        current_time = time.time()
         cpu = round(random() * 100, 2)
         ram = round(random() * 100, 2)
         disk = round(random() * 100, 2)
-        return ComputerState(state_time, cpu, ram, disk)
+        return ComputerState(current_time, cpu, ram, disk)
