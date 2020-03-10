@@ -14,6 +14,9 @@ class ComputerFlow(JsonContract):
         if flow is not None:
             self.flow = flow
 
+    def store_computer_state(self, computer_flow) -> None:
+        self.flow.append(computer_flow)
+
     @staticmethod
     def get_random_flow():
         flow: List[ComputerState] = list()
