@@ -1,5 +1,5 @@
-from CommonExternal.Entities.ComputerFlow import ComputerFlow
-from CommonExternal.JsonFomatterModule.JsonContract import JsonContract
+from Common.Entities.ComputerFlow import ComputerFlow
+from External.JsonFomatterModule.JsonContract import JsonContract
 
 
 class ComputerData(JsonContract):

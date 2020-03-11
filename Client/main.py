@@ -1,8 +1,8 @@
 import psutil
 import time
 
-from CommonExternal.Entities.ComputerState import ComputerState
-from CommonExternal.Entities.ComputerFlow import ComputerFlow
+from Common.Entities.ComputerState import ComputerState
+from Common.Entities.ComputerFlow import ComputerFlow
 from Client.ClientConfig import ClientConfig
 
 

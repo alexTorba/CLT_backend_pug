@@ -1,3 +1,4 @@
+# todo: I think, we will save it in json configuration file. Therefore, ClientConfig must be inherited from JsonContract
 class ClientConfig:
     check_state_period: int
     send_data_period: int

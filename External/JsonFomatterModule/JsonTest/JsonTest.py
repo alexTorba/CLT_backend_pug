@@ -1,6 +1,6 @@
-from CommonExternal.Entities.ComputerFlow import ComputerFlow
-from CommonExternal.JsonFomatterModule.JsonFormatter import JsonFormatter
-from CommonExternal.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
+from Common.Entities.ComputerFlow import ComputerFlow
+from External.JsonFomatterModule.JsonFormatter import JsonFormatter
+from Common.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
 
 
 class JsonTest:
@@ -22,7 +22,7 @@ class JsonTest:
 
         json_dto2 = JsonFormatter.serialize(dto_value)
         dto_value2 = JsonFormatter.deserialize(json_dto2, RequestDto[ComputerFlow])
-        print()
+        print()  # needed for breakpoint to check the result of formatting
 
 
 if __name__ == '__main__':
