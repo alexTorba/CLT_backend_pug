@@ -30,6 +30,9 @@ class ComputerState(JsonContract):
         if disk is not None:
             self.disk = disk
 
+    def __repr__(self) -> str:
+        return f"Time: {self.time}, Cpu: {self.cpu}, Ram: {self.ram}, Disk: {self.disk}"
+
     @staticmethod
     def get_random_state():
         current_time = time.time()

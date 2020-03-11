@@ -4,42 +4,51 @@ from sqlite3 import Cursor
 class ComputerDAO:
     _cursor: Cursor
 
-    __create_table: str = """CREATE TABLE IF NOT EXISTS [Computers] ([Id] INTEGER PRIMARY KEY AUTOINCREMENT, [Data] TEXT NOT NULL)"""
+    __create_table: str = """CREATE TABLE IF NOT EXISTS [Computers] (
+    [Name] INTEGER NOT NULL,
+    [Auditorium] TEXT NOT NULL,    
+    [Data] TEXT NOT NULL,
+    PRIMARY KEY ([Name], [Auditorium])
+);"""
 
-    __create_query: str = """INSERT INTO [Computers] ([Data]) VALUES (?)"""
+    __create_query: str = """INSERT INTO [Computers] ([Name], [Auditorium], [Data]) VALUES (?, ?, ?)"""
 
-    __read_query: str = """SELECT Data FROM [Computers] WHERE [Id] = {Id}"""
+    __read_query: str = """SELECT * FROM [Computers] WHERE [Name] = {name} AND [Auditorium] = {auditorium}"""
 
-    __read_all_query: str = """SELECT * FROM [Computer]"""
+    __read_all_query: str = """SELECT * FROM [Computers]"""
 
-    __update_query: str = """UPDATE [{table_name}] SET [Data] = {data} WHERE [Id] = {Id}"""
+    __update_query: str = """UPDATE [Computers] SET [Data] = (?) WHERE [Name] = {name} AND [Auditorium] = {auditorium};"""
 
-    __delete_query: str = """DELETE FROM [{table_name}] WHERE [Id] = {Id}"""
+    __delete_query: str = """DELETE FROM [Computers] WHERE [Name] = {name} AND [Auditorium]={auditorium}"""
+
+    __clear_db_query: str = """DELETE FROM [Computers]"""
 
     def __init__(self, cursor: Cursor) -> None:
         self._cursor = cursor
 
     def try_initialize(self) -> None:
-        query: str = self.__create_table
-        self._cursor.execute(query)
+        self._cursor.execute(self.__create_table)
 
-    def create(self, data: str) -> int:  # return last autoincrement id
+    def create(self, name: int, auditorium: str, data: str) -> None:
         query: str = self.__create_query
-        self._cursor.execute(query, *data)
-        return self._cursor.lastrowid
+        self._cursor.execute(query, (name, auditorium, data))
 
-    def read(self, computer_id: int):
-        query: str = self.__read_query.format(Id=computer_id)
+    def read(self, name: int, auditorium: str) -> None:
+        query: str = self.__read_query.format(name=name, auditorium=auditorium)
         self._cursor.execute(query)
 
-    def read_all(self):
+    def read_all(self) -> None:
         query: str = self.__read_all_query
         self._cursor.execute(query)
 
-    def update(self, computer_id: int, data: str) -> None:
-        query: str = self.__update_query.format(Id=computer_id, Data=data)
+    def update(self, name: int, auditorium: str, data: str) -> None:
+        query: str = self.__update_query.format(name=name, auditorium=auditorium)
+        self._cursor.execute(query, (data, ))
+
+    def delete(self, name: int, auditorium: str) -> None:
+        query: str = self.__delete_query.format(name=name, auditorium=auditorium)
         self._cursor.execute(query)
 
-    def delete(self, computer_id: int):
-        query: str = self.__delete_query.format(Id=computer_id)
+    def clear_db(self) -> None:
+        query = self.__clear_db_query
         self._cursor.execute(query)

@@ -1,10 +1,11 @@
 import sqlite3
 from typing import List
 
+from Server.Data.ComputerKey import ComputerKey
 from Server.DataBaseModule.DAO.ComputerDAO import ComputerDAO
 
 
-class DataBaseManager:
+class DBManager:
     __conn: sqlite3.Connection
     __cursor: sqlite3.Cursor
     __dao: ComputerDAO
@@ -15,25 +16,28 @@ class DataBaseManager:
         self.__dao = ComputerDAO(self.__cursor)
         self.__dao.try_initialize()
 
-    def create(self, data: str) -> int:
-        last_id = self.__dao.create(data)
+    def create(self, key: ComputerKey, data: str) -> None:
+        self.__dao.create(key.name, key.auditorium, data)
         self.__conn.commit()
-        return last_id
 
-    def read(self, computer_id: int):
-        self.__dao.read(computer_id)
+    def read(self, key: ComputerKey) -> str:
+        self.__dao.read(key.name, key.auditorium)
         return self.__cursor.fetchone()
 
     def read_all(self) -> List:
         self.__dao.read_all()
-        return self.__cursor.fetchone()
+        return self.__cursor.fetchall()
 
-    def update(self, computer_id: int, data: str) -> None:
-        self.__dao.update(computer_id, data)
+    def update(self, key: ComputerKey, data: str) -> None:
+        self.__dao.update(key.name, key.auditorium, data)
         self.__conn.commit()
 
-    def delete(self, computer_id) -> None:
-        self.__dao.delete(computer_id)
+    def delete(self, key: ComputerKey) -> None:
+        self.__dao.delete(key.name, key.auditorium)
+        self.__conn.commit()
+
+    def clear_db(self) -> None:
+        self.__dao.clear_db()
         self.__conn.commit()
 
     def __delattr__(self, name: str) -> None:

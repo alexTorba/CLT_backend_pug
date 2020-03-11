@@ -23,3 +23,7 @@ class ComputerFlow(JsonContract):
         for i in range(0, 10):
             flow.append(ComputerState.get_random_state())
         return ComputerFlow(flow)
+
+    def get_last_state(self) -> ComputerState:
+        last_index = len(self.flow) - 1
+        return self.flow[last_index]
