@@ -24,10 +24,14 @@ class JsonFormatter:
         for k, v in fields.items():
             if isinstance(v, JsonContract):
                 fields[k] = JsonFormatter.__object_to_dict(v)
-            elif hasattr(v, "__getitem__") and not isinstance(v, str):
+            elif isinstance(v, typing.List):
                 for index, item in enumerate(v):
                     if isinstance(item, JsonContract):
                         v[index] = JsonFormatter.__object_to_dict(item)
+            elif isinstance(v, typing.Dict):
+                for key, value in v.items():
+                    if isinstance(value, JsonContract):
+                        v[key] = JsonFormatter.__object_to_dict(value)
 
         return fields
 
@@ -49,12 +53,17 @@ class JsonFormatter:
             type_value = annotations.get(full_field_name)
             origin_type_value = typing.get_origin(type_value)
             if origin_type_value is not None:  # if type is Generic
-                items_type = type_value.__args__[0]
-                if inspect.isclass(items_type) and issubclass(items_type, JsonContract):
+                if TypeInspect.has_any_subclass(type_value.__args__, JsonContract):
                     if issubclass(origin_type_value, typing.List):
+                        items_type = type_value.__args__[0]
                         for index, item in enumerate(value):
                             item = JsonFormatter.__json_to_instance(item, items_type)
                             value[index] = item
+                    elif issubclass(origin_type_value, typing.Dict):
+                        values_type = type_value.__args__[1]
+                        for key, val in value.items():
+                            val = JsonFormatter.__json_to_instance(val, values_type)
+                            value[key] = val
                     else:
                         value = JsonFormatter.__json_to_instance(value, type_value)
             elif inspect.isclass(type_value) and issubclass(type_value, JsonContract):

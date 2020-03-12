@@ -18,6 +18,13 @@ class TypeInspect:
         return full__ann
 
     @staticmethod
+    def has_any_subclass(types: tuple, subclass: type):
+        for i in types:
+            if issubclass(i, subclass) and inspect.isclass(i):
+                return True
+        return False
+
+    @staticmethod
     def __get_full_annotations(cls: type) -> Union[dict, None]:
         origin = get_origin(cls)  # get class instead of _GenericAlias
         if origin is not None:
