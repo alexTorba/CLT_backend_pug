@@ -8,11 +8,9 @@ class ComputerFlow(JsonContract):
     flow: List[ComputerState]
     __json_fields = {"f": "flow"}
 
-    def __init__(self, flow: List[ComputerState] = None) -> None:
+    def __init__(self, flow: List[ComputerState] = list()) -> None:
         super().__init__(self.__json_fields)
-
-        if flow is not None:
-            self.flow = flow
+        self.flow = flow
 
     def store_computer_state(self, computer_state: ComputerState) -> None:
         self.flow.append(computer_state)

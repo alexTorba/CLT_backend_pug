@@ -1,14 +1,15 @@
 import time
 from random import random
+from typing import List, Tuple
 
 from External.JsonFomatterModule.JsonContract import JsonContract
 
 
 class ComputerState(JsonContract):
     time: float
-    cpu: float  # percent of CPU usage
-    ram: float  # percent of RAM usage
-    disk: float  # percent of DISK usage
+    cpu: float # percent of CPU usage
+    ram: float # percent of RAM usage
+    disk: List[Tuple] # percent of DISK usage per each partition, [(partition_name, usage_percent), ...]
 
     __json_fields = {
         "t": "time",
@@ -18,7 +19,7 @@ class ComputerState(JsonContract):
     }
 
     # parameters are none because of JsonContract need a default ctor
-    def __init__(self, state_time: float = None, cpu: float = None, ram: float = None, disk: float = None) -> None:
+    def __init__(self, state_time: float = None, cpu: float = None, ram: float = None, disk: list = None) -> None:
         super().__init__(self.__json_fields)
 
         if state_time is not None:
@@ -38,5 +39,5 @@ class ComputerState(JsonContract):
         current_time = time.time()
         cpu = round(random() * 100, 2)
         ram = round(random() * 100, 2)
-        disk = round(random() * 100, 2)
+        disk = [("some_disk_name", round(random() * 100, 2))]
         return ComputerState(current_time, cpu, ram, disk)
