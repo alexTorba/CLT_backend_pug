@@ -7,9 +7,9 @@ from External.JsonFomatterModule.JsonContract import JsonContract
 
 class ComputerState(JsonContract):
     time: float
-    cpu: float # percent of CPU usage
-    ram: float # percent of RAM usage
-    disk: List[Tuple] # percent of DISK usage per each partition, [(partition_name, usage_percent), ...]
+    cpu: float  # percent of CPU usage
+    ram: float  # percent of RAM usage
+    disk: List[Tuple]  # percent of DISK usage per each partition, [(partition_name, usage_percent), ...]
 
     __json_fields = {
         "t": "time",

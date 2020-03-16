@@ -1,8 +1,7 @@
-import psutil
 import time
 
-from Client.ComputerStateManager import ComputerStateManager
 from Client.ClientConfig import ClientConfig
+from Client.ComputerStateManager import ComputerStateManager
 
 # ------------------------------------------------------------------------------
 
