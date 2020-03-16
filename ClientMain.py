@@ -8,7 +8,7 @@ from Client.ClientConfig import ClientConfig
 
 if __name__ == '__main__':
     computer_state_manager = ComputerStateManager()
-    client_config = ClientConfig.create_default_config()
+    client_config = ClientConfig()
 
     last_time_sent_data = time.time()
     while True:

@@ -4,6 +4,7 @@ import time
 from Common.Entities.ComputerState import ComputerState
 from Common.Entities.ComputerFlow import ComputerFlow
 
+
 class ComputerStateManager:
 
     def __init__(self):
@@ -19,19 +20,21 @@ class ComputerStateManager:
 
     def __read_current_computer_state(self) -> ComputerState:
         current_time = time.time()
-        cpu_usage    = psutil.cpu_percent()
-        ram_usage    = self.__read_memory_usage()
-        disk_usage   = self.__read_disk_usage()
+        cpu_usage = psutil.cpu_percent()
+        ram_usage = self.__read_memory_usage()
+        disk_usage = self.__read_disk_usage()
         return ComputerState(current_time, cpu_usage, ram_usage, disk_usage)
 
-    def __read_memory_usage(self) -> float:
-        memory_usage_percent_index = 2 # psutils related
+    @staticmethod
+    def __read_memory_usage() -> float:
+        memory_usage_percent_index = 2  # psutils related
         memory_info = psutil.virtual_memory()
         return memory_info[memory_usage_percent_index]
 
-    def __read_disk_usage(self) -> list:
-        partition_name_index          = 0 # psutils related
-        partition_usage_percent_index = 3 # psutils related
+    @staticmethod
+    def __read_disk_usage() -> list:
+        partition_name_index = 0  # psutils related
+        partition_usage_percent_index = 3  # psutils related
 
         result = list()
 
