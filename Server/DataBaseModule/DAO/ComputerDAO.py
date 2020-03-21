@@ -6,7 +6,7 @@ class ComputerDAO:
 
     __create_table: str = """CREATE TABLE IF NOT EXISTS [Computers] (
     [Name] INTEGER NOT NULL,
-    [Auditorium] TEXT NOT NULL,    
+    [Auditorium] TEXT NOT NULL,
     [Data] TEXT NOT NULL,
     PRIMARY KEY ([Name], [Auditorium])
 );"""
