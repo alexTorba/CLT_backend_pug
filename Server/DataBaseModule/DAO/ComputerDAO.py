@@ -2,10 +2,10 @@ from sqlite3 import Cursor
 
 
 class ComputerDAO:
-    _cursor: Cursor
+    __cursor: Cursor
 
     __create_table: str = """CREATE TABLE IF NOT EXISTS [Computers] (
-    [Name] INTEGER NOT NULL,
+    [Name] TEXT NOT NULL,
     [Auditorium] TEXT NOT NULL,
     [Data] TEXT NOT NULL,
     PRIMARY KEY ([Name], [Auditorium])
@@ -23,32 +23,38 @@ class ComputerDAO:
 
     __clear_db_query: str = """DELETE FROM [Computers]"""
 
+     __count_db_query: str = """SELECT COUNT(*) FROM [Computers]"""
+
     def __init__(self, cursor: Cursor) -> None:
-        self._cursor = cursor
+        self.__cursor = cursor
 
     def try_initialize(self) -> None:
-        self._cursor.execute(self.__create_table)
+        self.__cursor.execute(self.__create_table)
 
-    def create(self, name: int, auditorium: str, data: str) -> None:
+    def create(self, name: str, auditorium: str, data: str) -> None:
         query: str = self.__create_query
-        self._cursor.execute(query, (name, auditorium, data))
+        self.__cursor.execute(query, (name, auditorium, data))
 
-    def read(self, name: int, auditorium: str) -> None:
+    def read(self, name: str, auditorium: str) -> None:
         query: str = self.__read_query.format(name=name, auditorium=auditorium)
-        self._cursor.execute(query)
+        self.__cursor.execute(query)
 
     def read_all(self) -> None:
         query: str = self.__read_all_query
-        self._cursor.execute(query)
+        self.__cursor.execute(query)
 
-    def update(self, name: int, auditorium: str, data: str) -> None:
+    def update(self, name: str, auditorium: str, data: str) -> None:
         query: str = self.__update_query.format(name=name, auditorium=auditorium)
-        self._cursor.execute(query, (data, ))
+        self.__cursor.execute(query, (data, ))
 
-    def delete(self, name: int, auditorium: str) -> None:
+    def delete(self, name: str, auditorium: str) -> None:
         query: str = self.__delete_query.format(name=name, auditorium=auditorium)
-        self._cursor.execute(query)
+        self.__cursor.execute(query)
 
     def clear_db(self) -> None:
         query = self.__clear_db_query
-        self._cursor.execute(query)
+        self.__cursor.execute(query)
+
+    def count(self) -> None:
+        query = self.__count_db_query
+        self.__cursor.execute(query)

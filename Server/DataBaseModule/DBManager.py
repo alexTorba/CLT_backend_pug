@@ -20,7 +20,7 @@ class DBManager:
         self.__dao.create(key.name, key.auditorium, data)
         self.__conn.commit()
 
-    def read(self, key: ComputerKey) -> str:
+    def read(self, key: ComputerKey) -> (str, str, str):
         self.__dao.read(key.name, key.auditorium)
         return self.__cursor.fetchone()
 
@@ -35,6 +35,10 @@ class DBManager:
     def delete(self, key: ComputerKey) -> None:
         self.__dao.delete(key.name, key.auditorium)
         self.__conn.commit()
+
+    def count(self) -> int:
+        self.__dao.count()
+        return self.cursor.fetchone()
 
     def clear_db(self) -> None:
         self.__dao.clear_db()

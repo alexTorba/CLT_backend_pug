@@ -2,7 +2,7 @@ from External.JsonFomatterModule.JsonContract import JsonContract
 
 
 class ComputerKey(JsonContract):
-    name: int
+    name: str
     auditorium: str
 
     __json_fields = {
@@ -10,7 +10,7 @@ class ComputerKey(JsonContract):
         "a": "auditorium"
     }
 
-    def __init__(self, name: int = None, auditorium: str = None):
+    def __init__(self, name: str = None, auditorium: str = None):
         super().__init__(self.__json_fields)
 
         if name is not None:
