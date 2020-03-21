@@ -3,7 +3,6 @@ import time
 from Client.ClientConfig import ClientConfig
 from Client.ComputerStateManager import ComputerStateManager
 
-# ------------------------------------------------------------------------------
 
 if __name__ == '__main__':
     computer_state_manager = ComputerStateManager()
@@ -17,5 +16,3 @@ if __name__ == '__main__':
             computer_state_manager.send_data_to_server()
 
         time.sleep(client_config.check_state_period)
-
-# ------------------------------------------------------------------------------
