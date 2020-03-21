@@ -1,4 +1,5 @@
 from External.JsonFomatterModule.JsonContract import JsonContract
+from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
 
 class ClientConfig(JsonContract):
@@ -13,3 +14,12 @@ class ClientConfig(JsonContract):
         super().__init__(self.__json_fields)
         self.check_state_period = check_state_period
         self.send_data_period = send_data_period
+
+    def copy(self):
+        return ClientConfig(self.check_state_period, self.send_data_period)
+
+    @staticmethod
+    def read_from_file(file_name):
+        file = open(file_name, "r")
+        file_content = file.read()
+        return JsonFormatter.deserialize(file_content, ClientConfig)
