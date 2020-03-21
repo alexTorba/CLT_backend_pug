@@ -38,7 +38,7 @@ class DBManager:
 
     def count(self) -> int:
         self.__dao.count()
-        return self.cursor.fetchone()
+        return self.__cursor.fetchone()
 
     def clear_db(self) -> None:
         self.__dao.clear_db()

@@ -139,3 +139,4 @@ dmypy.json
 
 # idea settings
 .idea/
+/temp_computer_flow.dat

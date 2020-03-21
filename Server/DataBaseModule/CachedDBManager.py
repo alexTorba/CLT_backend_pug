@@ -1,11 +1,10 @@
-from typing import List
+from typing import List, Dict
 
 from Server.DataBaseModule.DBManager import DBManager
 from Server.Data.ComputerKey import ComputerKey
 
 
 class CachedDBManager(DBManager):
-
     __cache: Dict[ComputerKey, str] = dict()
 
     def __init__(self) -> None:
@@ -21,22 +20,21 @@ class CachedDBManager(DBManager):
             return value[2]
 
         value = super().read(key)
-        if value in not None:
+        if value is not None:
             self.__cache[key] = value
             return value[2]
         else:
             return None
 
     def read_all(self) -> List[str]:
-        if self.__cache.count() == super().count():
-            return __cache.values()
-       
+        if len(self.__cache) == super().count():
+            return [*self.__cache.values()]
+
         read_all_result = super().read_all()
         json_data_values = []
         for name, auditorium, json_data in read_all_result:
             json_data_values.append(json_data)
         return json_data_values
-                
 
     def update(self, key: ComputerKey, data: str) -> None:
         self.__cache[key] = data

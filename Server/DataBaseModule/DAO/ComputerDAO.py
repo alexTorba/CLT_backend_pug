@@ -23,7 +23,7 @@ class ComputerDAO:
 
     __clear_db_query: str = """DELETE FROM [Computers]"""
 
-     __count_db_query: str = """SELECT COUNT(*) FROM [Computers]"""
+    __count_db_query: str = """SELECT COUNT(*) FROM [Computers]"""
 
     def __init__(self, cursor: Cursor) -> None:
         self.__cursor = cursor
@@ -45,7 +45,7 @@ class ComputerDAO:
 
     def update(self, name: str, auditorium: str, data: str) -> None:
         query: str = self.__update_query.format(name=name, auditorium=auditorium)
-        self.__cursor.execute(query, (data, ))
+        self.__cursor.execute(query, (data,))
 
     def delete(self, name: str, auditorium: str) -> None:
         query: str = self.__delete_query.format(name=name, auditorium=auditorium)
