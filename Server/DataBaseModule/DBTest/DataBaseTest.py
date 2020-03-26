@@ -64,14 +64,24 @@ class DataBaseTest:
     def clear_db(cls):
         cls.__db_manager.clear_db()
 
+    @classmethod
+    def test_wrong_read(cls):
+        computer = Computer.get_random_computer()
+        result = cls.__db_manager.read(computer.key)
+        print(result)
+
+    @staticmethod
+    def test_db():
+        DataBaseTest.clear_db()
+        DataBaseTest.create()
+        DataBaseTest.create()
+        DataBaseTest.read_all()
+        DataBaseTest.read(True)
+        DataBaseTest.update()
+        DataBaseTest.read(True)
+        DataBaseTest.delete()
+        DataBaseTest.read_all()
+
 
 if __name__ == '__main__':
-    DataBaseTest.clear_db()
-    DataBaseTest.create()
-    DataBaseTest.create()
-    DataBaseTest.read_all()
-    DataBaseTest.read(True)
-    DataBaseTest.update()
-    DataBaseTest.read(True)
-    DataBaseTest.delete()
-    DataBaseTest.read_all()
+    DataBaseTest.test_db()

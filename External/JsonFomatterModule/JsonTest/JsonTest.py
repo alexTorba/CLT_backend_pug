@@ -1,6 +1,7 @@
 from Common.Entities.ComputerFlow import ComputerFlow
 from Common.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
+from External.JsonFomatterModule.JsonTest.TestEntities.SomeEntity import SomeEntity
 from External.JsonFomatterModule.JsonTest.TestEntities.SomeType import SomeType
 
 
@@ -26,6 +27,13 @@ class JsonTest:
         print(dto_value2)  # needed for breakpoint to check the result of formatting
 
     @staticmethod
+    def request_complex_dto_serialize():
+        dto = SomeEntity.get_temp_some_entity()
+        json_dto = JsonFormatter.serialize(dto)
+        dto_val = JsonFormatter.deserialize(json_dto, SomeEntity)
+        print(dto_val)
+
+    @staticmethod
     def dict_field_serialize():
         some_type = SomeType.get_random_some_type()
         json = JsonFormatter.serialize(some_type)
@@ -34,4 +42,4 @@ class JsonTest:
 
 
 if __name__ == '__main__':
-    JsonTest.dict_field_serialize()
+    JsonTest.request_complex_dto_serialize()

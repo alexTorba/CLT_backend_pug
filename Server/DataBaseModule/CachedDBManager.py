@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Union
 
 from Server.DataBaseModule.DBManager import DBManager
 from Server.Data.ComputerKey import ComputerKey
@@ -14,17 +14,16 @@ class CachedDBManager(DBManager):
         self.__cache[key] = data
         super().create(key, data)
 
-    def read(self, key: ComputerKey) -> (str, str, str):
+    def read(self, key: ComputerKey) -> Union[str, None]:
         value = self.__cache.get(key)
         if value is not None:
-            return value[2]
+            return value
 
-        value = super().read(key)
+        *_, value = super().read(key) or (None, None)
         if value is not None:
             self.__cache[key] = value
-            return value[2]
-        else:
-            return None
+
+        return value
 
     def read_all(self) -> List[str]:
         if len(self.__cache) == super().count():

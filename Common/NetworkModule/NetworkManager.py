@@ -1,2 +1,9 @@
 class NetworkManager:
-    pass
+
+    @staticmethod
+    def send():
+        pass
+
+    @staticmethod
+    def receive():
+        pass
