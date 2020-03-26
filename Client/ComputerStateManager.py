@@ -3,6 +3,7 @@ import time
 import os
 
 from Common.Entities.ComputerState import ComputerState
+from Common.Entities.ComputerState import DiskInfo
 from Common.Entities.ComputerFlow import ComputerFlow
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
@@ -62,6 +63,6 @@ class ComputerStateManager:
             partition_name = partition[partition_name_index]
             partition_usage_data = psutil.disk_usage(partition_name)
             partition_usage_percent = partition_usage_data[partition_usage_percent_index]
-            result.append((partition_name, partition_usage_percent))
+            result.append(DiskInfo(partition_name, partition_usage_percent))
 
         return result

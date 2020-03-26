@@ -4,12 +4,31 @@ from typing import List, Tuple
 
 from External.JsonFomatterModule.JsonContract import JsonContract
 
+class DiskInfo(JsonContract):
+    partition_name: str
+    usage_percent: float
+
+    __json_fields = {
+        "n": "partition_name",
+        "p": "usage_percent"
+    }
+
+    def __init__(self, partition_name: str = None, usage_percent: float = None ) -> None:
+        super().__init__(self.__json_fields)
+
+        if partition_name is not None:
+            self.partition_name = partition_name
+        if usage_percent is not None:
+            self.usage_percent = usage_percent
+
+    def __repr__(self) -> str:
+        return f"Partition name: {self.partition_name}, Percent of disk usage: {self.usage_percent}"
 
 class ComputerState(JsonContract):
     time: float
     cpu: float  # percent of CPU usage
     ram: float  # percent of RAM usage
-    disk: List[Tuple[str, float]]  # percent of DISK usage per each partition, [(partition_name, usage_percent), ...]
+    disk: List[DiskInfo]  # percent of DISK usage per each partition, [(partition_name, usage_percent), ...]
 
     __json_fields = {
         "t": "time",
@@ -19,7 +38,7 @@ class ComputerState(JsonContract):
     }
 
     # parameters are none because of JsonContract need a default ctor
-    def __init__(self, state_time: float = None, cpu: float = None, ram: float = None, disk: list = None) -> None:
+    def __init__(self, state_time: float = None, cpu: float = None, ram: float = None, disk: DiskInfo = None) -> None:
         super().__init__(self.__json_fields)
 
         if state_time is not None:
@@ -39,5 +58,5 @@ class ComputerState(JsonContract):
         current_time = time.time()
         cpu = round(random() * 100, 2)
         ram = round(random() * 100, 2)
-        disk = [("some_disk_name", round(random() * 100, 2))]
+        disk = [DiskInfo("some_disk_name", round(random() * 100, 2))]
         return ComputerState(current_time, cpu, ram, disk)
