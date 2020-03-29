@@ -1,3 +1,5 @@
+from typing import List
+
 import psutil
 import time
 import os
@@ -56,7 +58,7 @@ class ComputerStateManager:
         partition_name_index = 0  # psutils related
         partition_usage_percent_index = 3  # psutils related
 
-        result = list()
+        result: List[DiskInfo] = list()
 
         partitions = psutil.disk_partitions()
         for partition in partitions:
