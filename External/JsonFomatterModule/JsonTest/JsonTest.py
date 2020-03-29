@@ -3,6 +3,7 @@ from Common.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 from External.JsonFomatterModule.JsonTest.TestEntities.SomeEntity import SomeEntity
 from External.JsonFomatterModule.JsonTest.TestEntities.SomeType import SomeType
+from Server.Data.Computer import Computer
 
 
 class JsonTest:
@@ -40,6 +41,13 @@ class JsonTest:
         val = JsonFormatter.deserialize(json, SomeType)
         print(val)
 
+    @staticmethod
+    def computer_serialize():
+        computer = Computer.get_random_computer()
+        json = JsonFormatter.serialize(computer)
+        val = JsonFormatter.deserialize(json, Computer)
+        print(val)
+
 
 if __name__ == '__main__':
-    JsonTest.request_complex_dto_serialize()
+    JsonTest.computer_serialize()

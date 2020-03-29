@@ -1,3 +1,5 @@
+from Common.NetworkModule.DtoData.ResponceData.ResponseDto import ResponseDto
+from Common.NetworkModule.NetworkManager import NetworkManager
 from External.JsonFomatterModule.JsonContract import JsonContract
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
@@ -23,3 +25,8 @@ class ClientConfig(JsonContract):
         file = open(file_name, "r")
         file_content = file.read()
         return JsonFormatter.deserialize(file_content, ClientConfig)
+
+    @staticmethod
+    def read_from_server():
+        json = NetworkManager.get("ClientConfig")
+        return JsonFormatter.deserialize(json, ResponseDto[ClientConfig]).data if json else None

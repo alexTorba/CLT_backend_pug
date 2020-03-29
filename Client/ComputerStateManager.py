@@ -30,7 +30,7 @@ class ComputerStateManager:
         if os.path.exists(cls.__temp_data_file):
             with open(cls.__temp_data_file, "r") as file:
                 temp_data = file.read()
-            return JsonFormatter.deserialize(temp_data, ComputerFlow)
+            return JsonFormatter.deserialize(temp_data, ComputerFlow) if temp_data else ComputerFlow()
         else:
             return ComputerFlow()
 

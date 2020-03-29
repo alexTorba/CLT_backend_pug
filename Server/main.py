@@ -1,2 +1,5 @@
+from Server.Application import Application
+
 if __name__ == '__main__':
-    print("Hello server !")
+    app = Application()
+    app.run()
