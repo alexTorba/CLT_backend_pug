@@ -1,5 +1,6 @@
-import time
+import sys
 import threading
+import time
 
 from Client.ComputerStateManager import ComputerStateManager
 from Common.Entities.ClientConfig import ClientConfig
@@ -26,6 +27,7 @@ class Application:
 
             lock.acquire()
             current_config = self.__config.copy()
+            print(f"Current check_state_period = {current_config.check_state_period}")
             lock.release()
 
             if last_time_sent_data + current_config.send_data_period < time.time():
@@ -39,8 +41,14 @@ class Application:
             time.sleep(current_config.check_state_period)
 
     def __receive_config(self, lock):
-        new_config = ClientConfig(3, 1000)  # TODO receive some config from server using network manager
+        new_config = ClientConfig.read_from_server()
+
+        if new_config is None:
+            return
+
+        print("receive new config")
 
         lock.acquire()
         self.__config = new_config
         lock.release()
+        sys.exit("q")

@@ -1,3 +1,5 @@
+from typing import List
+
 import psutil
 import time
 import os
@@ -28,7 +30,7 @@ class ComputerStateManager:
         if os.path.exists(cls.__temp_data_file):
             with open(cls.__temp_data_file, "r") as file:
                 temp_data = file.read()
-            return JsonFormatter.deserialize(temp_data, ComputerFlow)
+            return JsonFormatter.deserialize(temp_data, ComputerFlow) if temp_data else ComputerFlow()
         else:
             return ComputerFlow()
 
@@ -56,7 +58,7 @@ class ComputerStateManager:
         partition_name_index = 0  # psutils related
         partition_usage_percent_index = 3  # psutils related
 
-        result = list()
+        result: List[DiskInfo] = list()
 
         partitions = psutil.disk_partitions()
         for partition in partitions:
