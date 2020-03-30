@@ -1,16 +1,18 @@
-from Common.Entities.ClientConfig import ClientConfig
-from Common.NetworkModule.DtoData.ResponceData.ResponseDto import ResponseDto
+from typing import Dict, Union, Callable
+
+from Common.NetworkModule.DtoData.RequestData.BaseRequestDto import BaseRequestDto
+from Common.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
 from Common.NetworkModule.NetworkManager import NetworkManager
+from Server.ConfigModule.ConfigManager import ConfigManager
 
 
 class Application:
+    __method_handler: Dict[str, Union[Callable[[], BaseResponseDto], Callable[[BaseRequestDto], BaseResponseDto]]]
+
     def __init__(self):
-        pass
+        self.__method_handler = {
+            "GetClientConfig": ConfigManager.get_config
+        }
 
     def run(self):
-        method_handler: dict = {"ClientConfig": self.get_config}
-        NetworkManager.start_listening(method_handler)
-
-    @staticmethod
-    def get_config() -> ResponseDto[ClientConfig]:
-        return ResponseDto[ClientConfig](data=ClientConfig(20, 1000))
+        NetworkManager.start_listening(self.__method_handler)

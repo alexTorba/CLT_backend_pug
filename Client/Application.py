@@ -1,37 +1,28 @@
-import sys
-import threading
 import time
 
 from Client.ComputerStateManager import ComputerStateManager
-from Common.Entities.ClientConfig import ClientConfig
+from Client.ConfigModule.ConfigManager import ConfigManager
 
 
 class Application:
-
     def __init__(self):
-        self.__config = ClientConfig()
+        self.__computer_state_manager = ComputerStateManager()
+        self.__config_manager = ConfigManager()
         pass
 
     def run(self) -> None:
-        computer_state_manager = ComputerStateManager()
-
-        lock = threading.Lock()
-        receive_thread = threading.Thread(target=Application.__receive_config, args=(self, lock))
-        receive_thread.start()
+        self.__config_manager.start_receiving()
 
         x = 0  # for testing
 
         last_time_sent_data = time.time()
         while True:
-            computer_state_manager.save_current_state()
+            self.__computer_state_manager.save_current_state()
 
-            lock.acquire()
-            current_config = self.__config.copy()
-            print(f"Current check_state_period = {current_config.check_state_period}")
-            lock.release()
+            current_config = self.__config_manager.get_current_state()
 
             if last_time_sent_data + current_config.send_data_period < time.time():
-                computer_state_manager.send_data_to_server()
+                self.__computer_state_manager.send_data_to_server()
                 last_time_sent_data = time.time()
 
             x += 1  # for testing
@@ -39,16 +30,3 @@ class Application:
                 break  # for testing
 
             time.sleep(current_config.check_state_period)
-
-    def __receive_config(self, lock):
-        new_config = ClientConfig.read_from_server()
-
-        if new_config is None:
-            return
-
-        print("receive new config")
-
-        lock.acquire()
-        self.__config = new_config
-        lock.release()
-        sys.exit("q")

@@ -13,8 +13,8 @@ class MethodHandler:
     def do_get(self, server_method: str):
         return self.__method_handler[server_method]()
 
-    def do_post(self):
-        pass
+    def do_post(self, server_method: str):
+        return self.__method_handler[server_method]()
 
     @staticmethod
     def get_server_method_name(request_path: str) -> str:
