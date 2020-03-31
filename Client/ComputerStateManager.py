@@ -1,12 +1,14 @@
+import os
+import time
 from typing import List
 
 import psutil
-import time
-import os
 
+from Common.Entities.ComputerFlow import ComputerFlow
 from Common.Entities.ComputerState import ComputerState
 from Common.Entities.ComputerState import DiskInfo
-from Common.Entities.ComputerFlow import ComputerFlow
+from Common.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
+from Common.NetworkModule.NetworkManager import NetworkManager
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
 
@@ -15,7 +17,11 @@ class ComputerStateManager:
 
     def send_data_to_server(self) -> None:
         computer_flow = self.__read_temp_data()
-        # TODO send
+
+        dto = RequestDto[ComputerFlow](data=computer_flow)
+        dto_json = JsonFormatter.serialize(dto)
+        NetworkManager.send("SendComputerFlow", dto_json)
+
         os.remove(self.__temp_data_file)
 
     def save_current_state(self) -> None:

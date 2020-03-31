@@ -13,8 +13,11 @@ class MethodHandler:
     def do_get(self, server_method: str):
         return self.__method_handler[server_method]()
 
-    def do_post(self, server_method: str):
-        return self.__method_handler[server_method]()
+    def do_post(self, server_method: str, dto: BaseRequestDto):
+        return self.__method_handler[server_method](dto)
+
+    def get_request_type(self, server_method: str):
+        return self.__method_handler[server_method].__annotations__["dto"]
 
     @staticmethod
     def get_server_method_name(request_path: str) -> str:

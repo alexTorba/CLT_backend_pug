@@ -13,10 +13,14 @@ from Common.NetworkModule.UrlManager import UrlManager
 class NetworkManager:
 
     @staticmethod
-    def send(path: str, data: str) -> Union[str, None]:
+    def send(path: str, data: str) -> str:
         url = UrlManager.get_url(path)
-        response = requests.post(url, data)
-        return ""
+        response: str = ""
+        try:
+            response = requests.post(url, data).content.decode("utf-8")
+        except Exception as e:
+            print(e)
+        return response
 
     @staticmethod
     def get(path: str) -> str:

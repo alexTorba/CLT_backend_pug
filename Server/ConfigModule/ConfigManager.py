@@ -6,7 +6,7 @@ from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 class ConfigManager:
     @staticmethod
     def get_config() -> ResponseDto[ClientConfig]:
-        return ResponseDto[ClientConfig](data=ConfigManager.__get_config_impl())
+        return ResponseDto[ClientConfig](200, ConfigManager.__get_config_impl())
     
     @staticmethod
     def __get_config_impl() -> ClientConfig:
