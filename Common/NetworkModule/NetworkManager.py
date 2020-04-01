@@ -33,7 +33,7 @@ class NetworkManager:
         return response
 
     @staticmethod
-    def start_listening(method_handler: Dict[str, Union[Callable[[], BaseResponseDto], Callable[[BaseRequestDto], BaseResponseDto]]]):
+    def start_listening(method_handler: MethodHandler):
         httpd = HTTPServer(("localhost", 8000), HttpRequestHandler)
-        HttpRequestHandler.method_handler = MethodHandler(method_handler)
+        HttpRequestHandler.method_handler = method_handler
         httpd.serve_forever()
