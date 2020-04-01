@@ -20,7 +20,7 @@ class Application:
             self.__computer_state_manager.save_current_state()
 
             current_config = self.__config_manager.get_current_state()
-            # self.__computer_state_manager.send_data_to_server() to check server method
+            # self.__computer_state_manager.send_data_to_server()  # to check server method
 
             if last_time_sent_data + current_config.send_data_period < time.time():
                 self.__computer_state_manager.send_data_to_server()

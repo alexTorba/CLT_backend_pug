@@ -8,6 +8,7 @@ from Common.Entities.ComputerFlow import ComputerFlow
 from Common.Entities.ComputerState import ComputerState
 from Common.Entities.ComputerState import DiskInfo
 from External.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
+from External.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
 from External.NetworkModule.NetworkManager import NetworkManager
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
@@ -18,11 +19,15 @@ class ComputerStateManager:
     def send_data_to_server(self) -> None:
         computer_flow = self.__read_temp_data()
 
+        self.__send_data_to_server_impl(computer_flow)
+
+        os.remove(self.__temp_data_file)
+
+    @staticmethod
+    def __send_data_to_server_impl(computer_flow: ComputerFlow):
         dto = RequestDto[ComputerFlow](data=computer_flow)
         dto_json = JsonFormatter.serialize(dto)
         NetworkManager.send("SendComputerFlow", dto_json)
-
-        os.remove(self.__temp_data_file)
 
     def save_current_state(self) -> None:
         current_state = self.__read_current_computer_state()
