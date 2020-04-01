@@ -1,6 +1,6 @@
 from Common.Entities.ComputerFlow import ComputerFlow
-from Common.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
-from Common.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
+from External.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
+from External.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
 
 
 class ComputerManager:

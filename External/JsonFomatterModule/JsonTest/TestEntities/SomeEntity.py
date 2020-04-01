@@ -1,5 +1,5 @@
 from Common.Entities.ComputerFlow import ComputerFlow
-from Common.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
+from External.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
 from External.JsonFomatterModule.JsonContract import JsonContract
 
 

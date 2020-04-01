@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler
 
-from Common.NetworkModule.MethodHandler import MethodHandler
+from External.NetworkModule.MethodHandler import MethodHandler
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
 

@@ -7,8 +7,8 @@ import psutil
 from Common.Entities.ComputerFlow import ComputerFlow
 from Common.Entities.ComputerState import ComputerState
 from Common.Entities.ComputerState import DiskInfo
-from Common.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
-from Common.NetworkModule.NetworkManager import NetworkManager
+from External.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
+from External.NetworkModule.NetworkManager import NetworkManager
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
 

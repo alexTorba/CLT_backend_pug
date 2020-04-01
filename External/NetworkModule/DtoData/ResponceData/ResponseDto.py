@@ -2,7 +2,7 @@ import typing
 from typing import TypeVar
 
 from External.JsonFomatterModule.JsonContract import JsonContract
-from Common.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
+from External.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
 
 T = TypeVar("T", bound=JsonContract)
 

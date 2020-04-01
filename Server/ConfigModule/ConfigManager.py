@@ -1,5 +1,5 @@
 from Common.Entities.ClientConfig import ClientConfig
-from Common.NetworkModule.DtoData.ResponceData.ResponseDto import ResponseDto
+from External.NetworkModule.DtoData.ResponceData.ResponseDto import ResponseDto
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
 

@@ -2,8 +2,8 @@ import sys
 import threading
 
 from Common.Entities.ClientConfig import ClientConfig
-from Common.NetworkModule.DtoData.ResponceData.ResponseDto import ResponseDto
-from Common.NetworkModule.NetworkManager import NetworkManager
+from External.NetworkModule.DtoData.ResponceData.ResponseDto import ResponseDto
+from External.NetworkModule.NetworkManager import NetworkManager
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
 

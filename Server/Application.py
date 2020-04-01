@@ -1,9 +1,5 @@
-from typing import Dict, Union, Callable
-
-from Common.NetworkModule.DtoData.RequestData.BaseRequestDto import BaseRequestDto
-from Common.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
-from Common.NetworkModule.MethodHandler import MethodHandler
-from Common.NetworkModule.NetworkManager import NetworkManager
+from External.NetworkModule.MethodHandler import MethodHandler
+from External.NetworkModule.NetworkManager import NetworkManager
 from Server.ComputerModule.ComputerManager import ComputerManager
 from Server.ConfigModule.ConfigManager import ConfigManager
 

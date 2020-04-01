@@ -1,13 +1,10 @@
 from http.server import HTTPServer
-from typing import Union, Dict, Callable
 
 import requests  # pip install requests
 
-from Common.NetworkModule.DtoData.RequestData.BaseRequestDto import BaseRequestDto
-from Common.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
-from Common.NetworkModule.HttpRequestHandler import HttpRequestHandler
-from Common.NetworkModule.MethodHandler import MethodHandler
-from Common.NetworkModule.UrlManager import UrlManager
+from External.NetworkModule.HttpRequestHandler import HttpRequestHandler
+from External.NetworkModule.MethodHandler import MethodHandler
+from External.NetworkModule.UrlManager import UrlManager
 
 
 class NetworkManager:

@@ -1,7 +1,7 @@
 from typing import Union, Callable, Dict
 
-from Common.NetworkModule.DtoData.RequestData.BaseRequestDto import BaseRequestDto
-from Common.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
+from External.NetworkModule.DtoData.RequestData.BaseRequestDto import BaseRequestDto
+from External.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
 
 
 class MethodHandler:
