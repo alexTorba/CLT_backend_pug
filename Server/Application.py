@@ -10,7 +10,7 @@ class Application:
     def __init__(self):
         method_by_name = {
             "GetClientConfig": ConfigManager.get_config,
-            "SendComputerFlow": ComputerManager.send_computer_state
+            "SendComputerFlow": ComputerManager.send_computer_flow
         }
         self.__method_handler = MethodHandler(method_by_name)
 

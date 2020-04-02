@@ -16,6 +16,7 @@ class MethodHandler:
     def do_post(self, server_method: str, dto: BaseRequestDto):
         return self.__method_handler[server_method](dto)
 
+    # noinspection PyUnresolvedReferences
     def get_request_type(self, server_method: str):
         return self.__method_handler[server_method].__annotations__["dto"]
 

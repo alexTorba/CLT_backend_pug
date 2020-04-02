@@ -2,6 +2,7 @@ from http.server import BaseHTTPRequestHandler
 
 from External.NetworkModule.MethodHandler import MethodHandler
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
+from External.NetworkModule.UrlManager import UrlManager
 
 
 class HttpRequestHandler(BaseHTTPRequestHandler):
@@ -26,6 +27,7 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
         method_name = MethodHandler.get_server_method_name(self.path)
         dto_type = self.method_handler.get_request_type(method_name)
         request_dto = JsonFormatter.deserialize(json_request_dto, dto_type)
+        UrlManager.resolve_client_address(request_dto, self.client_address)
 
         response_dto = self.method_handler.do_post(method_name, request_dto)
         self.send_response(response_dto.state_code)
