@@ -19,4 +19,4 @@ class DiskInfo(JsonContract):
             self.usage_percent = usage_percent
 
     def __repr__(self) -> str:
-        return f"Partition name: {self.partition_name}, Percent of disk usage: {self.usage_percent}"
+        return f"Partition name: {self.partition_name}, Percent of partition usage: {self.usage_percent}"
