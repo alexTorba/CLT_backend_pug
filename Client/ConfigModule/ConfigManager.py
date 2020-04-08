@@ -12,15 +12,20 @@ class ConfigManager:
         self.__config = ClientConfig()
         self.__lock = threading.Lock()
 
-    def get_config(self) -> ClientConfig:
-        return self.__config
+    def get_current_config(self) -> ClientConfig:
+        self.__lock.acquire()
+        current_config = self.__config.copy()
+        self.__lock.release()
 
-    def start_receiving(self):
+        print(f"Current config: check_state_period = {current_config.check_state_period}, send_data_period={current_config.send_data_period}")
+        return current_config
+
+    def start_receiving(self) -> None:
         receive_thread = threading.Thread(target=ConfigManager.__receive_config, args=(self, self.__lock))
         receive_thread.start()
 
     def __receive_config(self, lock: threading.Lock):
-        print("try to read remote config")  # check thar thread is abort after taking remote config
+        print("try to read remote config")  # check that thread is abort after taking remote config
         new_config = ConfigManager.__read_from_server()
 
         if new_config is None:
@@ -33,17 +38,7 @@ class ConfigManager:
         lock.release()
         sys.exit("q")
 
-    def get_config_copy(self):
-        return self.__config.copy()
-
     @staticmethod
     def __read_from_server():
         json: str = NetworkManager.get("GetClientConfig")
         return JsonFormatter.deserialize(json, ResponseDto[ClientConfig]).data if json else None
-
-    def get_current_state(self):
-        self.__lock.acquire()
-        current_config = self.get_config_copy()
-        print(f"Current check_state_period = {current_config.check_state_period}")
-        self.__lock.release()
-        return current_config
