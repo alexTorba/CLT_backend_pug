@@ -10,7 +10,7 @@ class ComputerState(JsonContract):
     time: float
     cpu: float  # percent of CPU usage
     ram: float  # percent of RAM usage
-    disk: List[DiskInfo]  # percent of DISK usage per each partition, [(partition_name, usage_percent), ...]
+    disk: List[DiskInfo]  # percent of DISK usage per each partition
 
     __json_fields = {
         "t": "time",

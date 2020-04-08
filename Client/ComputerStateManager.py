@@ -15,6 +15,8 @@ from External.NetworkModule.NetworkManager import NetworkManager
 class ComputerStateManager:
     __temp_data_file = "temp_computer_flow.dat"
 
+    #--------------------------------------------------------------------------
+
     def send_data_to_server(self) -> None:
         computer_flow = self.__read_temp_data()
 
@@ -28,6 +30,8 @@ class ComputerStateManager:
         dto_json = JsonFormatter.serialize(dto)
         NetworkManager.send("SendComputerFlow", dto_json)
 
+    #--------------------------------------------------------------------------
+
     def save_current_state(self) -> None:
         current_state = self.__read_current_computer_state()
 
@@ -37,17 +41,21 @@ class ComputerStateManager:
 
     @classmethod
     def __read_temp_data(cls) -> ComputerFlow:
+        temp_data = ""
+
         if os.path.exists(cls.__temp_data_file):
             with open(cls.__temp_data_file, "r") as file:
                 temp_data = file.read()
-            return JsonFormatter.deserialize(temp_data, ComputerFlow) if temp_data else ComputerFlow()
-        else:
-            return ComputerFlow()
+
+        print(f"temp_data is {temp_data}")
+        return JsonFormatter.deserialize(temp_data, ComputerFlow) if temp_data else ComputerFlow()
 
     @classmethod
     def __store_temp_data(cls, data) -> None:
         with open(cls.__temp_data_file, "w") as temp_data_file:
             temp_data_file.write(JsonFormatter.serialize(data))
+
+    #--------------------------------------------------------------------------
 
     @classmethod
     def __read_current_computer_state(cls) -> ComputerState:
