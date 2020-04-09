@@ -13,7 +13,7 @@ from Server.DataBaseModule.CachedDBManager import CachedDBManager
 
 
 class ComputerManager:
-    __db_manager: CachedDBManager = CachedDBManager()
+    __cache: CachedDBManager = CachedDBManager()
 
     @staticmethod
     def send_computer_flow(dto: RequestDto[ComputerFlow]) -> BaseResponseDto:
@@ -24,8 +24,8 @@ class ComputerManager:
 
     @classmethod
     def __send_computer_flow_impl(cls, key: ComputerKey, flow: ComputerFlow):
-        json = JsonFormatter.serialize(flow)
-        cls.__db_manager.update(key, json)
+        computer = Computer(key, flow)
+        cls.__cache.update(key, computer)
         pass
 
     # ---------------------------------------------------------------------
@@ -38,9 +38,7 @@ class ComputerManager:
 
     @classmethod
     def __get_computer_impl(cls, key: ComputerKey) -> Computer:
-        json_data = cls.__db_manager.read(key)
-        computer = JsonFormatter.deserialize(json_data, Computer)
-        return computer
+        return cls.__cache.read(key)
 
     # ---------------------------------------------------------------------
 
@@ -63,4 +61,4 @@ class ComputerManager:
 
     @classmethod
     def __get_computers_impl(cls, auditorium: str) -> List[Computer]:
-        return cls.__db_manager.read_computers_by_auditorium(auditorium)
+        return cls.__cache.read_computers_by_auditorium(auditorium)
