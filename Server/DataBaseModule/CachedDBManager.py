@@ -1,6 +1,7 @@
 from typing import List, Dict, Union
 
 from Server.DataBaseModule.DBManager import DBManager
+from Server.Data.Computer import Computer
 from Server.Data.ComputerKey import ComputerKey
 
 
@@ -14,6 +15,7 @@ class CachedDBManager(DBManager):
         self.__cache[key] = data
         super().create(key, data)
 
+    # noinspection PyTypeChecker
     def read(self, key: ComputerKey) -> Union[str, None]:
         value = self.__cache.get(key)
         if value is not None:
@@ -34,6 +36,17 @@ class CachedDBManager(DBManager):
         for name, auditorium, json_data in read_all_result:
             json_data_values.append(json_data)
         return json_data_values
+
+    def read_computers_by_auditorium(self, auditorium: str) -> List[Computer]:
+        read_auditorium_result = super().read_by_auditorium(auditorium)
+        computers: List[Computer] = list()
+        for name, res_auditorium, json_data in read_auditorium_result:
+            key = ComputerKey(name, res_auditorium)
+            computer = Computer(key, json_data)
+            computers.append(computer)
+
+            self.__cache[key] = json_data
+        return computers
 
     def update(self, key: ComputerKey, data: str) -> None:
         self.__cache[key] = data

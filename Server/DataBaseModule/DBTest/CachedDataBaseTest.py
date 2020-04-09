@@ -1,10 +1,11 @@
-from typing import List
-
 from Common.Entities.ComputerFlow import ComputerFlow
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 from Server.Data.Computer import Computer
 from Server.Data.ComputerKey import ComputerKey
 from Server.DataBaseModule.CachedDBManager import CachedDBManager
+
+
+# sys.path.append("..\..\..")
 
 
 class CacheDataBaseTest:
@@ -32,9 +33,16 @@ class CacheDataBaseTest:
         print("Reading the row was successful")
 
     @classmethod
+    def read_by_auditorium(cls):
+        print("\nTry to read computers of last added auditorium")
+        computers = cls.__db_manager.read_computers_by_auditorium(cls.__last_key.auditorium)
+        for computer in computers:
+            print(computer.key)
+        print("Reading the row was successful")
+
+    @classmethod
     def read_all(cls):
         print("\nTry to read all rows in db")
-        computers: List[Computer] = list()
         for json_data in cls.__db_manager.read_all():
             computer_data = JsonFormatter.deserialize(json_data, ComputerFlow)
             print(computer_data.get_last_state())
@@ -65,7 +73,9 @@ if __name__ == '__main__':
     CacheDataBaseTest.create()
     CacheDataBaseTest.read_all()
     CacheDataBaseTest.read(True)
+    CacheDataBaseTest.read_by_auditorium()
     CacheDataBaseTest.update()
     CacheDataBaseTest.read(True)
     CacheDataBaseTest.delete()
+    CacheDataBaseTest.read_by_auditorium()
     CacheDataBaseTest.read_all()

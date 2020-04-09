@@ -2,15 +2,18 @@ from typing import List
 
 from Common.Entities.ComputerFlow import ComputerFlow
 from External.JsonFomatterModule.JsonContract import JsonContract
+from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 from External.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
 from External.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
 from External.NetworkModule.DtoData.ResponceData.ResponseDto import ResponseDto
 from Server.ComputerModule.ComputerKeyManager import ComputerKeyManager
 from Server.Data.Computer import Computer
 from Server.Data.ComputerKey import ComputerKey
+from Server.DataBaseModule.CachedDBManager import CachedDBManager
 
 
 class ComputerManager:
+    __db_manager: CachedDBManager = CachedDBManager()
 
     @staticmethod
     def send_computer_flow(dto: RequestDto[ComputerFlow]) -> BaseResponseDto:
@@ -19,9 +22,10 @@ class ComputerManager:
         ComputerManager.__send_computer_flow_impl(computer_key, computer_flow)
         return BaseResponseDto(200)
 
-    @staticmethod
-    def __send_computer_flow_impl(key: ComputerKey, flow: ComputerFlow):
-        # todo: do something with computer_flow and key
+    @classmethod
+    def __send_computer_flow_impl(cls, key: ComputerKey, flow: ComputerFlow):
+        json = JsonFormatter.serialize(flow)
+        cls.__db_manager.update(key, json)
         pass
 
     # ---------------------------------------------------------------------
@@ -32,10 +36,11 @@ class ComputerManager:
         computer: Computer = ComputerManager.__get_computer_impl(key)
         return ResponseDto[Computer](200, computer)
 
-    @staticmethod
-    def __get_computer_impl(key: ComputerKey) -> Computer:
-        # todo: get computer by key
-        return Computer.get_random_computer()
+    @classmethod
+    def __get_computer_impl(cls, key: ComputerKey) -> Computer:
+        json_data = cls.__db_manager.read(key)
+        computer = JsonFormatter.deserialize(json_data, Computer)
+        return computer
 
     # ---------------------------------------------------------------------
 
@@ -56,8 +61,6 @@ class ComputerManager:
         computers: List[Computer] = ComputerManager.__get_computers_impl(auditorium)
         return ResponseDto[List[Computer]](200, computers)
 
-    @staticmethod
-    def __get_computers_impl(auditorium: str) -> List[Computer]:
-        # todo: get computers by auditorium
-        computers: List[Computer] = [Computer.get_random_computer(), Computer.get_random_computer()]
-        return computers
+    @classmethod
+    def __get_computers_impl(cls, auditorium: str) -> List[Computer]:
+        return cls.__db_manager.read_computers_by_auditorium(auditorium)

@@ -24,6 +24,10 @@ class DBManager:
         self.__dao.read(key.name, key.auditorium)
         return self.__cursor.fetchone()
 
+    def read_by_auditorium(self, auditorium: str) -> List:
+        self.__dao.read_by_auditorium(auditorium)
+        return self.__cursor.fetchall()
+
     def read_all(self) -> List:
         self.__dao.read_all()
         return self.__cursor.fetchall()
