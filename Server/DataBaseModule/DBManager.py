@@ -28,6 +28,11 @@ class DBManager:
         self.__dao.read_by_auditorium(auditorium)
         return self.__cursor.fetchall()
 
+    def read_auditoriums(self) -> List[str]:
+        self.__dao.read_auditoriums()
+        # the transformation needed because "fetchall" returns list of tuples
+        return [auditorium[0] for auditorium in self.__cursor.fetchall()]
+
     def read_all(self) -> List:
         self.__dao.read_all()
         return self.__cursor.fetchall()

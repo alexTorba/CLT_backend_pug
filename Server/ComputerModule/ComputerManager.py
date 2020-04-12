@@ -62,3 +62,13 @@ class ComputerManager:
     @classmethod
     def __get_computers_impl(cls, auditorium: str) -> List[Computer]:
         return cls.__cache.read_computers_by_auditorium(auditorium)
+
+    # ---------------------------------------------------------------------
+
+    @classmethod
+    def get_auditoriums() -> ResponseDto[List[str]]:
+        return ResponseDto[List[str]](ComputerManager.__get_auditoriums_impl())
+
+    @classmethod
+    def __get_auditoriums_impl(cls) -> List[str]:
+        return cls.__cache.read_auditoriums()

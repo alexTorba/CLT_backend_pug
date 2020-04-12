@@ -12,7 +12,8 @@ class Application:
             "GetClientConfig": ConfigManager.get_config,
             "SendComputerFlow": ComputerManager.send_computer_flow,
             "GetComputer": ComputerManager.get_computer,
-            "GetComputers": ComputerManager.get_computers
+            "GetComputers": ComputerManager.get_computers,
+            "GetAuditoriums": ComputerManager.get_auditoriums
         }
         self.__method_handler = MethodHandler(method_by_name)
 

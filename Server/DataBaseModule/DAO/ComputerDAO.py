@@ -17,6 +17,8 @@ class ComputerDAO:
 
     __read_auditorium_query: str = """SELECT * FROM [Computers] WHERE [Auditorium] = {auditorium}"""
 
+    __read_auditoriums: str = """SELECT DISTINCT [Auditorium] FROM [Computers]"""
+
     __read_all_query: str = """SELECT * FROM [Computers]"""
 
     __update_query: str = """UPDATE [Computers] SET [Data] = (?) WHERE [Name] = {name} AND [Auditorium] = {auditorium};"""
@@ -43,6 +45,10 @@ class ComputerDAO:
 
     def read_by_auditorium(self, auditorium: str) -> None:
         query: str = self.__read_auditorium_query.format(auditorium=auditorium)
+        self.__cursor.execute(query)
+
+    def read_auditoriums(self) -> None:
+        query: str = self.__read_auditoriums
         self.__cursor.execute(query)
 
     def read_all(self) -> None:

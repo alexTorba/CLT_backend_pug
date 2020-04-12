@@ -33,6 +33,13 @@ class DataBaseTest:
         print("Reading the row was successful")
 
     @classmethod
+    def read_auditoriums(cls):
+        print("\nTry to read auditoriums in db")
+        for auditorium in cls.__db_manager.read_auditoriums():
+            print(auditorium)
+        print("Reading auditoriums was successful")
+
+    @classmethod
     def read_all(cls):
         print("\nTry to read all rows in db")
         computers: List[Computer] = list()
@@ -76,6 +83,7 @@ class DataBaseTest:
         DataBaseTest.create()
         DataBaseTest.create()
         DataBaseTest.read_all()
+        DataBaseTest.read_auditoriums()
         DataBaseTest.read(True)
         DataBaseTest.update()
         DataBaseTest.read(True)
