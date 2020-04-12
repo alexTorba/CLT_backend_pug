@@ -2,7 +2,6 @@ from typing import List
 
 from Common.Entities.ComputerFlow import ComputerFlow
 from External.JsonFomatterModule.JsonContract import JsonContract
-from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 from External.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
 from External.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
 from External.NetworkModule.DtoData.ResponceData.ResponseDto import ResponseDto
@@ -65,9 +64,9 @@ class ComputerManager:
 
     # ---------------------------------------------------------------------
 
-    @classmethod
+    @staticmethod
     def get_auditoriums() -> ResponseDto[List[str]]:
-        return ResponseDto[List[str]](ComputerManager.__get_auditoriums_impl())
+        return ResponseDto[List[str]](200, ComputerManager.__get_auditoriums_impl())
 
     @classmethod
     def __get_auditoriums_impl(cls) -> List[str]:

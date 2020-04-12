@@ -30,14 +30,14 @@ class CachedDBManager(DBManager):
 
         return None
 
-    def read_all(self) -> List[str]:
+    def read_all(self) -> List[Computer]:
         if len(self.__cache) == super().count():
             return [*self.__cache.values()]
 
         read_all_result = super().read_all()
         computers = []
         for name, auditorium, json_data in read_all_result:
-            computer = JsonFormatter.deserialize(json_data, Computer)
+            computer: Computer = JsonFormatter.deserialize(json_data, Computer)
             self.__cache[ComputerKey(name, auditorium)] = computer
             computers.append(computer)
         return computers
