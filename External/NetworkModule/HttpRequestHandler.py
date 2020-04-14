@@ -8,15 +8,24 @@ from External.NetworkModule.UrlManager import UrlManager
 class HttpRequestHandler(BaseHTTPRequestHandler):
     method_handler: MethodHandler
 
+    def do_OPTIONS(self):
+        self.send_response(200, "OK")
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header("Access-Control-Allow-Headers", "X-Requested-With")
+
     def do_GET(self):
         print(f"Receive get request from {self.client_address}")
 
         method_name = MethodHandler.get_server_method_name(self.path)
         result = HttpRequestHandler.method_handler.do_get(method_name)
+
         self.send_response(result.state_code)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
 
         result_json = JsonFormatter.serialize(result)
-        self.end_headers()
         self.wfile.write(result_json.encode())
 
     def do_POST(self):
@@ -30,7 +39,11 @@ class HttpRequestHandler(BaseHTTPRequestHandler):
         UrlManager.resolve_client_address(request_dto, self.client_address)
 
         response_dto = self.method_handler.do_post(method_name, request_dto)
-        self.send_response(response_dto.state_code)
         response_dto_json = JsonFormatter.serialize(response_dto)
+        self.send_response(response_dto.state_code)
+
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Content-type', 'text/html')
         self.end_headers()
+
         self.wfile.write(response_dto_json.encode())
