@@ -47,7 +47,11 @@ class DBManager:
 
     def count(self) -> int:
         self.__dao.count()
-        return self.__cursor.fetchone()
+        return self.__cursor.fetchone()[0]
+
+    def count_by_key(self, key: ComputerKey) -> int:
+        self.__dao.count_by_key(key.name, key.auditorium)
+        return self.__cursor.fetchone()[0]
 
     def clear_db(self) -> None:
         self.__dao.clear_db()

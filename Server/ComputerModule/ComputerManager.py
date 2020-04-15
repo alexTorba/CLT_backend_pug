@@ -24,7 +24,10 @@ class ComputerManager:
     @classmethod
     def __send_computer_flow_impl(cls, key: ComputerKey, flow: ComputerFlow):
         computer = Computer(key, flow)
-        cls.__cache.update(key, computer)
+        if cls.__cache.count_by_key(key) == 0:
+            cls.__cache.create(key, computer)
+        else:
+            cls.__cache.update(key, computer)
         pass
 
     # ---------------------------------------------------------------------

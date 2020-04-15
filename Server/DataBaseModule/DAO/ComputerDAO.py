@@ -29,6 +29,8 @@ class ComputerDAO:
 
     __count_db_query: str = """SELECT COUNT(*) FROM [Computers]"""
 
+    __count_db_key_query: str = """SELECT COUNT(*) FROM [Computers] WHERE [Name] = {name} AND [Auditorium] = {auditorium}"""
+
     def __init__(self, cursor: Cursor) -> None:
         self.__cursor = cursor
 
@@ -69,4 +71,8 @@ class ComputerDAO:
 
     def count(self) -> None:
         query = self.__count_db_query
+        self.__cursor.execute(query)
+
+    def count_by_key(self, name: str, auditorium: str) -> None:
+        query = self.__count_db_key_query.format(name=name, auditorium=auditorium)
         self.__cursor.execute(query)
