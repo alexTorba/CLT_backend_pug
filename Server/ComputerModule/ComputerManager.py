@@ -61,7 +61,7 @@ class ComputerManager:
         return ResponseDto[List[ComputerKey]](200, keys)
 
     @classmethod
-    def __get_keys_by_auditorium_impl(cls, auditorium: str) -> List[Computer]:
+    def __get_keys_by_auditorium_impl(cls, auditorium: str) -> List[ComputerKey]:
         return cls.__cache.read_keys_by_auditorium(auditorium)
 
     # ---------------------------------------------------------------------
