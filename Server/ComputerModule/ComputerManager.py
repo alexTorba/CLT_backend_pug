@@ -28,7 +28,6 @@ class ComputerManager:
             cls.__cache.create(key, computer)
         else:
             cls.__cache.update(key, computer)
-        pass
 
     # ---------------------------------------------------------------------
 
@@ -44,7 +43,7 @@ class ComputerManager:
 
     # ---------------------------------------------------------------------
 
-    class GetComputersDto(JsonContract):
+    class GetKeysByAuditoriumDto(JsonContract):
         auditorium: str
         __json_fields = {
             "a": "auditorium"
@@ -56,14 +55,14 @@ class ComputerManager:
                 self.auditorium = auditorium
 
     @staticmethod
-    def get_computers(dto: RequestDto[GetComputersDto]) -> ResponseDto[List[Computer]]:
+    def get_keys_by_auditorium(dto: RequestDto[GetKeysByAuditoriumDto]) -> ResponseDto[List[ComputerKey]]:
         auditorium: str = dto.data.auditorium
-        computers: List[Computer] = ComputerManager.__get_computers_impl(auditorium)
-        return ResponseDto[List[Computer]](200, computers)
+        keys: List[ComputerKey] = ComputerManager.__get_keys_by_auditorium_impl(auditorium)
+        return ResponseDto[List[ComputerKey]](200, keys)
 
     @classmethod
-    def __get_computers_impl(cls, auditorium: str) -> List[Computer]:
-        return cls.__cache.read_computers_by_auditorium(auditorium)
+    def __get_keys_by_auditorium_impl(cls, auditorium: str) -> List[Computer]:
+        return cls.__cache.read_keys_by_auditorium(auditorium)
 
     # ---------------------------------------------------------------------
 

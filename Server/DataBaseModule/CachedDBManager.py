@@ -42,16 +42,14 @@ class CachedDBManager(DBManager):
             computers.append(computer)
         return computers
 
-    def read_computers_by_auditorium(self, auditorium: str) -> List[Computer]:
-        read_auditorium_result = super().read_by_auditorium(auditorium)
-        computers: List[Computer] = list()
-        for name, res_auditorium, json_data in read_auditorium_result:
-            key = ComputerKey(name, res_auditorium)
-            computer = JsonFormatter.deserialize(json_data, Computer)
-            computers.append(computer)
+    def read_keys_by_auditorium(self, auditorium: str) -> List[ComputerKey]:
+        read_result = super().read_by_auditorium(auditorium)
 
-            self.__cache[key] = computer
-        return computers
+        result: List[ComputerKey] = list()
+        for name, auditorium, _ in read_result:
+            result.append(ComputerKey(name, auditorium))
+
+        return result
 
     def update(self, key: ComputerKey, computer: Computer) -> None:
         self.__cache[key] = computer

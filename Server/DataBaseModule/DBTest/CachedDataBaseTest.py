@@ -27,9 +27,9 @@ class CacheDataBaseTest:
     @classmethod
     def read_by_auditorium(cls):
         print("\nTry to read computers of last added auditorium")
-        computers = cls.__db_manager.read_computers_by_auditorium(cls.__last_key.auditorium)
-        for computer in computers:
-            print(computer.key)
+        computer_keys = cls.__db_manager.read_keys_by_auditorium(cls.__last_key.auditorium)
+        for computer_key in computer_keys:
+            print(computer_key)
         print("Reading the row was successful")
 
     @classmethod
