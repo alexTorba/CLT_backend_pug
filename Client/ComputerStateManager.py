@@ -19,7 +19,6 @@ class ComputerStateManager:
 
     def send_data_to_server(self) -> None:
         computer_flow = self.__read_temp_data()
-
         self.__send_data_to_server_impl(computer_flow)
 
         os.remove(self.__temp_data_file)
@@ -47,7 +46,6 @@ class ComputerStateManager:
             with open(cls.__temp_data_file, "r") as file:
                 temp_data = file.read()
 
-        print(f"temp_data is {temp_data}")
         return JsonFormatter.deserialize(temp_data, ComputerFlow) if temp_data else ComputerFlow()
 
     @classmethod

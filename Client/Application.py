@@ -14,12 +14,14 @@ class Application:
 
         last_time_sent_data = time.time()
         while True:
+            print("Saving current state")
             self.__computer_state_manager.save_current_state()
 
             current_config = self.__config_manager.get_current_config()
-            self.__computer_state_manager.send_data_to_server()  # temp (need for test)
+            print(f"Current client config: check_state_period={current_config.check_state_period}, send_data_period={current_config.send_data_period}")
 
             if last_time_sent_data + current_config.send_data_period < time.time():
+                print("Sending data to server")
                 self.__computer_state_manager.send_data_to_server()
                 last_time_sent_data = time.time()
 

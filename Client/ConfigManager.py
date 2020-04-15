@@ -16,8 +16,6 @@ class ConfigManager:
         self.__lock.acquire()
         current_config = self.__config.copy()
         self.__lock.release()
-
-        print(f"Current config: check_state_period = {current_config.check_state_period}, send_data_period={current_config.send_data_period}")
         return current_config
 
     def start_receiving(self) -> None:
@@ -25,13 +23,13 @@ class ConfigManager:
         receive_thread.start()
 
     def __receive_config(self, lock: threading.Lock):
-        print("try to read remote config")  # check that thread is abort after taking remote config
+        print("Try to read remote config")  # check that thread is abort after taking remote config
         new_config = ConfigManager.__read_from_server()
 
         if new_config is None:
             return
 
-        print("receive new config")
+        print("Received new config")
 
         lock.acquire()
         self.__config = new_config
