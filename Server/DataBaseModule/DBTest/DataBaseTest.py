@@ -16,7 +16,7 @@ class DataBaseTest:
         print("Create row in db test")
         computer = Computer.get_random_computer()
         cls.__last_key = computer.key
-        json = JsonFormatter.serialize(computer.data)
+        json = JsonFormatter.serialize(computer)
         cls.__db_manager.create(computer.key, json)
         print(f"Creating was successful. ComputerKey = {computer.key}")
 
@@ -24,9 +24,8 @@ class DataBaseTest:
     def read(cls, additional_info: bool = None):
         print("\nTry to read last added row in db")
         name, auditorium, json_data = cls.__db_manager.read(cls.__last_key)
-        computer_data = JsonFormatter.deserialize(json_data, ComputerFlow)
+        computer = JsonFormatter.deserialize(json_data, Computer)
         key = ComputerKey(name, auditorium)
-        computer = Computer(key, computer_data)
         print(f"Key = {key}")
         if additional_info:
             print(computer.data.get_last_state())
@@ -56,8 +55,8 @@ class DataBaseTest:
     @classmethod
     def update(cls):
         print(f"\nUpdate last computer data with key = {cls.__last_key}")
-        new_computer_data = ComputerFlow.get_random_flow()
-        json = JsonFormatter.serialize(new_computer_data)
+        new_computer = Computer.get_random_computer()
+        json = JsonFormatter.serialize(new_computer)
         cls.__db_manager.update(cls.__last_key, json)
         print("updating was successful")
 
