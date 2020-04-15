@@ -1,14 +1,13 @@
 import time
 
 from Client.ComputerStateManager import ComputerStateManager
-from Client.ConfigModule.ConfigManager import ConfigManager
+from Client.ConfigManager import ConfigManager
 
 
 class Application:
     def __init__(self):
         self.__computer_state_manager = ComputerStateManager()
         self.__config_manager = ConfigManager()
-        pass
 
     def run(self) -> None:
         self.__config_manager.start_receiving()
