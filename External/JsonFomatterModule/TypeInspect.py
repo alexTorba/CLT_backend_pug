@@ -31,7 +31,7 @@ class TypeInspect:
             cls = origin
         if not hasattr(cls, "__annotations__"):
             return None
-        annotation: dict = cls.__annotations__
+        annotation: dict = cls.__annotations__.copy()
         if hasattr(cls, "__bases__"):
             bases = cls.__bases__
             for b in bases:

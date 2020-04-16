@@ -1,9 +1,11 @@
 from Common.Entities.ComputerFlow import ComputerFlow
-from External.NetworkModule.Data.DtoData.RequestData.RequestDto import RequestDto
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 from External.JsonFomatterModule.JsonTest.TestEntities.SomeEntity import SomeEntity
 from External.JsonFomatterModule.JsonTest.TestEntities.SomeType import SomeType
+from External.NetworkModule.Data.DtoData.RequestData.RequestDto import RequestDto
+from Server.ComputerModule.ComputerManager import ComputerManager
 from Server.Data.Computer import Computer
+from Server.Data.ComputerKey import ComputerKey
 
 
 class JsonTest:
@@ -48,6 +50,21 @@ class JsonTest:
         val = JsonFormatter.deserialize(json, Computer)
         print(val)
 
+    @staticmethod
+    def request_dto_computer_key():
+        dto0 = RequestDto[ComputerKey](data=ComputerKey("5", "40"))
+        json0 = JsonFormatter.serialize(dto0)
+        val0 = JsonFormatter.deserialize(json0, RequestDto[ComputerKey])
+        print(val0)
+
+        print(RequestDto.__annotations__["data"])
+
+        dto1 = RequestDto[ComputerManager.GetKeysByAuditoriumDto](data=ComputerManager.GetKeysByAuditoriumDto("37"))
+        json1 = JsonFormatter.serialize(dto1)
+        val1 = JsonFormatter.deserialize(json1, RequestDto[ComputerManager.GetKeysByAuditoriumDto])
+        print(val1)
+        print(RequestDto.__annotations__["data"])
+
 
 if __name__ == '__main__':
-    JsonTest.computer_serialize()
+    JsonTest.request_dto_serialize()
