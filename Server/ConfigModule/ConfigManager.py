@@ -1,7 +1,7 @@
 import os
 
 from Common.Entities.ClientConfig import ClientConfig
-from External.NetworkModule.DtoData.ResponceData.ResponseDto import ResponseDto
+from External.NetworkModule.Data.DtoData.ResponceData.ResponseDto import ResponseDto
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
 

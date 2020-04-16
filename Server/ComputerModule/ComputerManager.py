@@ -2,9 +2,10 @@ from typing import List
 
 from Common.Entities.ComputerFlow import ComputerFlow
 from External.JsonFomatterModule.JsonContract import JsonContract
-from External.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
-from External.NetworkModule.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
-from External.NetworkModule.DtoData.ResponceData.ResponseDto import ResponseDto
+from External.NetworkModule.Data.DtoData.RequestData.RequestDto import RequestDto
+from External.NetworkModule.Data.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
+from External.NetworkModule.Data.DtoData.ResponceData.ResponseDto import ResponseDto
+from External.NetworkModule.Data.ExceptionsData.ServerLogicException import ServerLogicException
 from Server.ComputerModule.ComputerKeyManager import ComputerKeyManager
 from Server.Data.Computer import Computer
 from Server.Data.ComputerKey import ComputerKey
@@ -17,6 +18,10 @@ class ComputerManager:
     @staticmethod
     def send_computer_flow(dto: RequestDto[ComputerFlow]) -> BaseResponseDto:
         computer_flow: ComputerFlow = dto.data
+
+        if computer_flow is None or not hasattr(computer_flow, "flow"):
+            raise ServerLogicException(401, "Received wrong data from client ! Empty ComputerFlow !")
+
         computer_key: ComputerKey = ComputerKeyManager.get_computer_key(dto.client_ip, dto.client_port)
         ComputerManager.__send_computer_flow_impl(computer_key, computer_flow)
         return BaseResponseDto(200)
@@ -34,6 +39,10 @@ class ComputerManager:
     @staticmethod
     def get_computer(dto: RequestDto[ComputerKey]) -> ResponseDto[Computer]:
         key: ComputerKey = dto.data
+
+        if not hasattr(key, "auditorium") or not hasattr(key, "name"):
+            raise ServerLogicException(401, "Received wrong data from client !")
+
         computer: Computer = ComputerManager.__get_computer_impl(key)
         return ResponseDto[Computer](200, computer)
 
@@ -56,6 +65,11 @@ class ComputerManager:
 
     @staticmethod
     def get_keys_by_auditorium(dto: RequestDto[GetKeysByAuditoriumDto]) -> ResponseDto[List[ComputerKey]]:
+        data: ComputerManager.GetKeysByAuditoriumDto = dto.data
+
+        if not hasattr(data, "auditorium"):
+            raise ServerLogicException(401, "Received wrong data from client ! Field auditorium must have value !")
+
         auditorium: str = dto.data.auditorium
         keys: List[ComputerKey] = ComputerManager.__get_keys_by_auditorium_impl(auditorium)
         return ResponseDto[List[ComputerKey]](200, keys)

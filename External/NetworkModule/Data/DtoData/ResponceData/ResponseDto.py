@@ -2,17 +2,17 @@ import typing
 from typing import TypeVar
 
 from External.JsonFomatterModule.JsonContract import JsonContract
-from External.NetworkModule.DtoData.RequestData.BaseRequestDto import BaseRequestDto
+from External.NetworkModule.Data.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
 
 T = TypeVar("T", bound=JsonContract)
 
 
-class RequestDto(BaseRequestDto, typing.Generic[T]):
+class ResponseDto(BaseResponseDto, typing.Generic[T]):
     data: T
     __json_field = {"d": "data"}
 
-    def __init__(self, server_method: str = None, data: T = None):
-        super().__init__(server_method)
+    def __init__(self, status_code: int = None, data: T = None):
+        super().__init__(status_code)
 
         if data is not None:
             self.data = data

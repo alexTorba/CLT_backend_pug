@@ -1,5 +1,5 @@
 from Common.Entities.ComputerFlow import ComputerFlow
-from External.NetworkModule.DtoData.RequestData.RequestDto import RequestDto
+from External.NetworkModule.Data.DtoData.RequestData.RequestDto import RequestDto
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 from External.JsonFomatterModule.JsonTest.TestEntities.SomeEntity import SomeEntity
 from External.JsonFomatterModule.JsonTest.TestEntities.SomeType import SomeType

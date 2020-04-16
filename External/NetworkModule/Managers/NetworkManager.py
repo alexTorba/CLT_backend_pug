@@ -2,9 +2,9 @@ from http.server import HTTPServer
 
 import requests  # pip install requests
 
-from External.NetworkModule.HttpRequestHandler import HttpRequestHandler
-from External.NetworkModule.MethodHandler import MethodHandler
-from External.NetworkModule.UrlManager import UrlManager
+from External.NetworkModule.Handlers.HttpRequestHandler import HttpRequestHandler
+from External.NetworkModule.Handlers.MethodHandler import MethodHandler
+from External.NetworkModule.Managers.UrlManager import UrlManager
 
 
 class NetworkManager:

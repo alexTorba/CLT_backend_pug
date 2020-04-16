@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from External.NetworkModule.DtoData.RequestData import BaseRequestDto
+from External.NetworkModule.Data.DtoData.RequestData import BaseRequestDto
 
 
 class UrlManager:

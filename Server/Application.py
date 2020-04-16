@@ -1,5 +1,5 @@
-from External.NetworkModule.MethodHandler import MethodHandler
-from External.NetworkModule.NetworkManager import NetworkManager
+from External.NetworkModule.Handlers.MethodHandler import MethodHandler
+from External.NetworkModule.Managers.NetworkManager import NetworkManager
 from Server.ComputerModule.ComputerManager import ComputerManager
 from Server.ConfigModule.ConfigManager import ConfigManager
 
@@ -18,4 +18,5 @@ class Application:
         self.__method_handler = MethodHandler(method_by_name)
 
     def run(self):
+        print("Start listening")
         NetworkManager.start_listening(self.__method_handler)
