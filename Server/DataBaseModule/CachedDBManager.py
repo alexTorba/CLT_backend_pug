@@ -27,6 +27,7 @@ class CachedDBManager(DBManager):
         if value is not None:
             computer = JsonFormatter.deserialize(value, Computer)
             self.__cache[key] = computer
+            return computer
 
         return None
 
