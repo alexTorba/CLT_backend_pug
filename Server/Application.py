@@ -10,6 +10,7 @@ class Application:
     def __init__(self):
         method_by_name = {
             "GetClientConfig": ConfigManager.get_config,
+            "SetClientConfig": ConfigManager.set_config,
             "SendComputerFlow": ComputerManager.send_computer_flow,
             "GetAuditoriums": ComputerManager.get_auditoriums,
             "GetKeysByAuditorium": ComputerManager.get_keys_by_auditorium,

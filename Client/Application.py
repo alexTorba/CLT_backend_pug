@@ -18,7 +18,6 @@ class Application:
             self.__computer_state_manager.save_current_state()
 
             current_config = self.__config_manager.get_current_config()
-            print(f"Current client config: check_state_period={current_config.check_state_period}, send_data_period={current_config.send_data_period}")
 
             if last_time_sent_data + current_config.send_data_period < time.time():
                 print("Sending data to server")

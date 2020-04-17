@@ -1,4 +1,5 @@
 import sys
+import time
 import threading
 
 from Common.Entities.ClientConfig import ClientConfig
@@ -8,6 +9,8 @@ from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 
 
 class ConfigManager:
+    __refresh_config_period: float = 15
+
     def __init__(self):
         self.__config = ClientConfig()
         self.__lock = threading.Lock()
@@ -23,18 +26,17 @@ class ConfigManager:
         receive_thread.start()
 
     def __receive_config(self, lock: threading.Lock):
-        print("Try to read remote config")  # check that thread is abort after taking remote config
-        new_config = ConfigManager.__read_from_server()
+        while True:
+            print("Try to read remote config")  # check that thread is abort after taking remote config
+            new_config = ConfigManager.__read_from_server()
 
-        if new_config is None:
-            return
+            if new_config is not None:
+                print(f"Received new config: check_state_period={new_config.check_state_period}, send_data_period={new_config.send_data_period}")
+                lock.acquire()
+                self.__config = new_config
+                lock.release()
 
-        print("Received new config")
-
-        lock.acquire()
-        self.__config = new_config
-        lock.release()
-        sys.exit("q")
+            time.sleep(self.__refresh_config_period)
 
     @staticmethod
     def __read_from_server():
