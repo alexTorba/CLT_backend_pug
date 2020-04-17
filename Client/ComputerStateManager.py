@@ -65,22 +65,19 @@ class ComputerStateManager:
 
     @staticmethod
     def __read_memory_usage() -> float:
-        memory_usage_percent_index = 2  # psutils related
         memory_info = psutil.virtual_memory()
-        return memory_info[memory_usage_percent_index]
+        return memory_info.percent
 
     @staticmethod
     def __read_disk_usage() -> list:
-        partition_name_index = 0  # psutils related
-        partition_usage_percent_index = 3  # psutils related
-
         result: List[DiskInfo] = list()
 
         partitions = psutil.disk_partitions()
         for partition in partitions:
-            partition_name = partition[partition_name_index]
-            partition_usage_data = psutil.disk_usage(partition_name)
-            partition_usage_percent = partition_usage_data[partition_usage_percent_index]
-            result.append(DiskInfo(partition_name, partition_usage_percent))
+            if "cdrom" in partition.opts and partition.fstype == "":  # specific of psutil on windows
+                continue
+
+            partition_usage = psutil.disk_usage(partition.device)
+            result.append(DiskInfo(partition.device, partition_usage.percent))
 
         return result
