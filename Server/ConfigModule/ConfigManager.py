@@ -5,6 +5,7 @@ from External.NetworkModule.Data.DtoData.ResponceData.ResponseDto import Respons
 from External.NetworkModule.Data.DtoData.ResponceData.BaseResponseDto import BaseResponseDto
 from External.NetworkModule.Data.DtoData.RequestData.RequestDto import RequestDto
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
+from External.NetworkModule.Data.ExceptionsData.ServerLogicException import ServerLogicException
 
 
 class ConfigManager:
@@ -33,15 +34,13 @@ class ConfigManager:
         return BaseResponseDto(200 if success else 406)
 
     @classmethod
-    def __set_config_impl(cls, web_config) -> bool:
+    def __set_config_impl(cls, web_config: ClientConfig) -> bool:
         if not hasattr(web_config, "check_state_period") or not hasattr(web_config, "send_data_period"):
             raise ServerLogicException(401, "Received wrong data from client !")
 
-        config: ClientConfig = JsonFormatter.deserialize(web_config, ClientConfig)
-
-        if ConfigManager.__validate_config(config):
+        if ConfigManager.__validate_config(web_config):
             with open(cls.__file_name, "w") as config_file:
-                config_file.write(JsonFormatter.serialize(config))
+                config_file.write(JsonFormatter.serialize(web_config))
                 return True
 
         return False
@@ -50,8 +49,6 @@ class ConfigManager:
 
     @staticmethod
     def __read_config_from_file(file_name: str) -> ClientConfig:
-        file_content = ""
-
         if os.path.exists(file_name):
             with open(file_name, "r") as file:
                 file_content = file.read()
