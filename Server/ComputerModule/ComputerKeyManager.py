@@ -33,5 +33,5 @@ class ComputerKeyManager:
     @classmethod
     def __create_computer_key(cls, client_address: str, client_port: int) -> ComputerKey:
         auditorium: str = client_address[:3][1:]
-        name: str = str(client_port)[-2:]
+        name: str = str(client_port)[:1]
         return ComputerKey(name, auditorium)

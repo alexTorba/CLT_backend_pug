@@ -48,7 +48,10 @@ class ComputerManager:
 
     @classmethod
     def __get_computer_impl(cls, key: ComputerKey) -> Computer:
-        return cls.__cache.read(key)
+        computer: Computer = cls.__cache.read(key)
+        if computer is None:
+            raise ServerLogicException(401, f"Try to get nonexistent computer by key: {key}")
+        return computer
 
     # ---------------------------------------------------------------------
 
