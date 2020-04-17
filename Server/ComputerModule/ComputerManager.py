@@ -22,7 +22,7 @@ class ComputerManager:
         if computer_flow is None or not hasattr(computer_flow, "flow"):
             raise ServerLogicException(401, "Received wrong data from client ! Empty ComputerFlow !")
 
-        computer_key: ComputerKey = ComputerKeyManager.get_computer_key(dto.client_ip, dto.client_port)
+        computer_key: ComputerKey = ComputerKeyManager.get_computer_key(dto.client_ip)
         ComputerManager.__send_computer_flow_impl(computer_key, computer_flow)
         return BaseResponseDto(200)
 

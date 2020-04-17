@@ -11,7 +11,7 @@ class ComputerKeyManager:
     __file_name: str = "computer_key_map.txt"
 
     @classmethod
-    def get_computer_key(cls, client_address: str, client_port: int) -> ComputerKey:
+    def get_computer_key(cls, client_address: str) -> ComputerKey:
         if cls.__computer_keys_data is None:
             cls.__read_keys_from_file()  # try read from file
 
@@ -20,7 +20,7 @@ class ComputerKeyManager:
             key = cls.__computer_keys_data.address_by_computer_key.get(client_address, None)
 
         if key is None:
-            key = cls.__create_computer_key(client_address, client_port)
+            key = cls.__create_computer_key(client_address)
         return key
 
     @classmethod
@@ -31,7 +31,8 @@ class ComputerKeyManager:
             return JsonFormatter.deserialize(keys, ComputerKeysData) if keys else None
 
     @classmethod
-    def __create_computer_key(cls, client_address: str, client_port: int) -> ComputerKey:
-        auditorium: str = client_address[:3][1:]
-        name: str = str(client_port)[:1]
+    def __create_computer_key(cls, client_address: str) -> ComputerKey:
+        address_octets = client_address.split('.')
+        auditorium: str = address_octets[2]
+        name: str = address_octets[3]
         return ComputerKey(name, auditorium)
