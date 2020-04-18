@@ -1,5 +1,6 @@
 from External.NetworkModule.Handlers.MethodHandler import MethodHandler
 from External.NetworkModule.Managers.NetworkManager import NetworkManager
+from External.NetworkModule.Managers.UrlManager import UrlManager
 from Server.ComputerModule.ComputerManager import ComputerManager
 from Server.ConfigModule.ConfigManager import ConfigManager
 
@@ -17,6 +18,7 @@ class Application:
             "GetComputer": ComputerManager.get_computer
         }
         self.__method_handler = MethodHandler(method_by_name)
+        UrlManager.init_url()
 
     def run(self):
         print("Start listening")

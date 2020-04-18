@@ -77,4 +77,4 @@ class JsonTest:
 
 
 if __name__ == '__main__':
-    JsonTest.client_config()
+    JsonTest.computer_serialize()

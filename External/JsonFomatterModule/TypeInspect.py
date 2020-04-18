@@ -57,3 +57,22 @@ class TypeInspect:
         generic_type = inspect.getattr_static(cls_type, "__orig_bases__")[0].__dict__.get("__args__")[0]
         cls.__cache_generic_type[cls_type] = generic_type
         return generic_type
+
+    @classmethod
+    def object_has_same_type(cls, value, expected_type: type):
+        real_type = type(value)
+        origin_real_type = get_origin(real_type)
+        origin_expected_type = get_origin(expected_type)
+
+        if origin_real_type is not None and origin_expected_type is None:
+            return origin_real_type is expected_type
+
+        if origin_real_type is None and origin_expected_type is not None:
+            return real_type is origin_expected_type
+
+        if origin_real_type is not None and origin_expected_type is not None:
+            real_generic_type = cls.__get_generic_type(real_type)
+            real_expected_type = cls.__get_generic_type(expected_type)
+            return origin_real_type is origin_expected_type and real_generic_type is real_expected_type
+
+        return real_type is expected_type

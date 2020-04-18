@@ -38,6 +38,10 @@ class SendRequestTest:
         result = NetworkManager.send("GetComputer", json)
         print(result)
 
+        json_dto = '{"d": {"a": 3}}'  # type value of "a" might be a string
+        result2 = NetworkManager.send("GetComputer", json_dto)
+        print(result2)
+
     @staticmethod
     def get_keys_by_auditorium():
         dto = RequestDto[GetKeysByAuditoriumDto](data=GetKeysByAuditoriumDto("39"))

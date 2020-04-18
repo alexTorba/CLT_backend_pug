@@ -68,5 +68,8 @@ class JsonFormatter:
                         value = JsonFormatter.__json_to_instance(value, type_value)
             elif inspect.isclass(type_value) and issubclass(type_value, JsonContract):
                 value = JsonFormatter.__json_to_instance(value, type_value)
+
+            if not TypeInspect.object_has_same_type(value, type_value):
+                continue  # recieved wrong type of value. Attemp to substitute type of value
             setattr(instance, full_field_name, value)
         return instance

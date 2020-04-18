@@ -27,6 +27,10 @@ class MethodHandler:
                         client_address: Tuple[str, int]) -> BaseRequestDto:
         dto_type = self.__get_request_type(method_name)
         request_dto = JsonFormatter.deserialize(json_request_dto, dto_type)
+
+        if not hasattr(request_dto, "data"):
+            raise ServerLogicException(400, f"Server work only with dto types ! Stop spam !")
+
         UrlManager.resolve_client_address(request_dto, client_address)
         return request_dto
 

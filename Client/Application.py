@@ -2,12 +2,14 @@ import time
 
 from Client.ComputerStateManager import ComputerStateManager
 from Client.ConfigManager import ConfigManager
+from External.NetworkModule.Managers.UrlManager import UrlManager
 
 
 class Application:
     def __init__(self):
         self.__computer_state_manager = ComputerStateManager()
         self.__config_manager = ConfigManager()
+        UrlManager.init_url()
 
     def run(self) -> None:
         self.__config_manager.start_receiving()

@@ -24,8 +24,8 @@ class Computer(JsonContract):
 
     @staticmethod
     def get_random_computer():
-        name = random.randint(0, 9)
-        auditorium = str(random.randint(37, 40))
+        name: str = str(random.randint(0, 9))
+        auditorium: str = str(random.randint(37, 40))
         key = ComputerKey(name, auditorium)
         computer_flow = ComputerFlow.get_random_flow()
         return Computer(key, computer_flow)
