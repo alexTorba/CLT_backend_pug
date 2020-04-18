@@ -10,6 +10,7 @@ from Common.Entities.ComputerState import DiskInfo
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 from External.NetworkModule.Data.DtoData.RequestData.RequestDto import RequestDto
 from External.NetworkModule.Managers.NetworkManager import NetworkManager
+from External.NetworkModule.Managers.UrlManager import UrlManager
 
 
 class ComputerStateManager:
@@ -18,10 +19,10 @@ class ComputerStateManager:
     # -------------------------------------------------------------------------
 
     def send_data_to_server(self) -> None:
-        computer_flow = self.__read_temp_data()
-        self.__send_data_to_server_impl(computer_flow)
-
-        os.remove(self.__temp_data_file)
+        if UrlManager.has_host():
+            computer_flow = self.__read_temp_data()
+            self.__send_data_to_server_impl(computer_flow)
+            os.remove(self.__temp_data_file)
 
     @staticmethod
     def __send_data_to_server_impl(computer_flow: ComputerFlow):

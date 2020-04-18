@@ -5,6 +5,7 @@ from Common.Entities.ClientConfig import ClientConfig
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 from External.NetworkModule.Data.DtoData.ResponceData.ResponseDto import ResponseDto
 from External.NetworkModule.Managers.NetworkManager import NetworkManager
+from External.NetworkModule.Managers.UrlManager import UrlManager
 
 
 class ConfigManager:
@@ -26,11 +27,11 @@ class ConfigManager:
 
     def __receive_config(self, lock: threading.Lock):
         while True:
-            print("Try to read remote config")  # check that thread is abort after taking remote config
+            print("[ConfigManager] Try to read remote config")  # check that thread is abort after taking remote config
             new_config = ConfigManager.__read_from_server()
 
             if new_config is not None:
-                print(f"Received new config: check_state_period={new_config.check_state_period}, send_data_period={new_config.send_data_period}")
+                print(f"[ConfigManager] Received new config: check_state_period={new_config.check_state_period}, send_data_period={new_config.send_data_period}")
                 lock.acquire()
                 self.__config = new_config
                 lock.release()
@@ -39,5 +40,9 @@ class ConfigManager:
 
     @staticmethod
     def __read_from_server():
-        json: str = NetworkManager.get("GetClientConfig")
-        return JsonFormatter.deserialize(json, ResponseDto[ClientConfig]).data if json else None
+        if UrlManager.has_host():
+            json: str = NetworkManager.get("GetClientConfig")
+            if json:
+                return JsonFormatter.deserialize(json, ResponseDto[ClientConfig]).data
+
+        return None

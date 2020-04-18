@@ -53,14 +53,14 @@ class ConfigManager:
             with open(file_name, "r") as file:
                 file_content = file.read()
         else:
-            raise Exception(f"Can not open file with Client config (file: {file_name})")
+            raise Exception(f"[ConfigManager] Can not open file with Client config (file: {file_name})")
 
         if file_content:
             config = JsonFormatter.deserialize(file_content, ClientConfig)
             if ConfigManager.__validate_config(config):
                 return config
 
-        raise Exception(f"Client config in {file_name} is invalid, check the file")
+        raise Exception(f"[ConfigManager] Client config in {file_name} is invalid, check the file")
 
     @staticmethod
     def __validate_config(config: ClientConfig) -> bool:

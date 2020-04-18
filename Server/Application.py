@@ -3,10 +3,12 @@ from External.NetworkModule.Managers.NetworkManager import NetworkManager
 from External.NetworkModule.Managers.UrlManager import UrlManager
 from Server.ComputerModule.ComputerManager import ComputerManager
 from Server.ConfigModule.ConfigManager import ConfigManager
+from Server.ClientsNotifier import ClientsNotifier
 
 
 class Application:
     __method_handler: MethodHandler
+    __clients_notifier: ClientsNotifier
 
     def __init__(self):
         method_by_name = {
@@ -18,8 +20,8 @@ class Application:
             "GetComputer": ComputerManager.get_computer
         }
         self.__method_handler = MethodHandler(method_by_name)
-        UrlManager.init_url()
+        self.__clients_notifier = ClientsNotifier(10)
 
     def run(self):
-        print("Start listening")
+        self.__clients_notifier.run()
         NetworkManager.start_listening(self.__method_handler)
