@@ -64,5 +64,4 @@ class ConfigManager:
 
     @staticmethod
     def __validate_config(config: ClientConfig) -> bool:
-        has_required_attributes = config.check_state_period is not None and config.send_data_period is not None
-        return has_required_attributes and config.check_state_period < config.send_data_period
+        return config.check_state_period < config.send_data_period

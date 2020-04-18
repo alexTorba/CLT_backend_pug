@@ -1,3 +1,4 @@
+from Common.Entities.ClientConfig import ClientConfig
 from Common.Entities.ComputerFlow import ComputerFlow
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 from External.JsonFomatterModule.JsonTest.TestEntities.SomeEntity import SomeEntity
@@ -65,6 +66,15 @@ class JsonTest:
         print(val1)
         print(RequestDto.__annotations__["data"])
 
+    # noinspection PyTypeChecker
+    @staticmethod
+    def client_config():
+        c = ClientConfig(None, None)
+        json = JsonFormatter.serialize(c)
+        val = JsonFormatter.deserialize(json, ClientConfig)
+        print(val.__dict__)
+        print(val)
+
 
 if __name__ == '__main__':
-    JsonTest.request_dto_serialize()
+    JsonTest.client_config()
