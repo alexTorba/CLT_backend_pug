@@ -64,4 +64,4 @@ class ConfigManager:
 
     @staticmethod
     def __validate_config(config: ClientConfig) -> bool:
-        return config.check_state_period < config.send_data_period
+        return config.send_data_period > config.check_state_period > 0 and config.send_data_period > 0
