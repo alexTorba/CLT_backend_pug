@@ -19,7 +19,7 @@ class ComputerManager:
     def send_computer_flow(dto: RequestDto[ComputerFlow]) -> BaseResponseDto:
         computer_flow: ComputerFlow = dto.data
 
-        if computer_flow is None or not hasattr(computer_flow, "flow"):
+        if not hasattr(computer_flow, "flow"):
             raise ServerLogicException(401, "Received wrong data from client ! Empty ComputerFlow !")
 
         computer_key: ComputerKey = ComputerKeyManager.get_computer_key(dto.client_ip)

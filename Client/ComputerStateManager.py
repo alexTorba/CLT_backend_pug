@@ -40,7 +40,7 @@ class ComputerStateManager:
 
     @classmethod
     def __read_temp_data(cls) -> ComputerFlow:
-        temp_data = ""
+        temp_data: str = ""
 
         if os.path.exists(cls.__temp_data_file):
             with open(cls.__temp_data_file, "r") as file:

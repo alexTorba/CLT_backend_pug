@@ -1,5 +1,6 @@
 import threading
 import time
+from typing import Union
 
 from Common.Entities.ClientConfig import ClientConfig
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
@@ -38,6 +39,6 @@ class ConfigManager:
             time.sleep(self.__refresh_config_period)
 
     @staticmethod
-    def __read_from_server():
+    def __read_from_server() -> Union[ClientConfig, None]:
         json: str = NetworkManager.get("GetClientConfig")
         return JsonFormatter.deserialize(json, ResponseDto[ClientConfig]).data if json else None
