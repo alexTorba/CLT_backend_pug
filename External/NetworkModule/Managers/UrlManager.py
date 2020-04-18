@@ -4,7 +4,6 @@ from typing import Tuple, Union
 
 from External.JsonFomatterModule.JsonFormatter import JsonFormatter
 from External.NetworkModule.Data.DtoData.RequestData import BaseRequestDto
-from External.NetworkModule.Data.UrlData.UrlInfo import UrlInfo
 
 
 class UrlManager:
